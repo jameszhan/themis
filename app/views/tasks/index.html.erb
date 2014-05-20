@@ -29,3 +29,7 @@
 <br>
 
 <%= link_to 'New Task', new_task_path %>
+
+<section id="directives-calendar" ng-controller="CalendarCtrl">
+    <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+</section>

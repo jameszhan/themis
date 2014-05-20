@@ -11,6 +11,12 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
+// require jquery_ujs
+//= require angular
+//= require bootstrap
+// require jquery.ui.all
+//= require fullcalendar/fullcalendar
+//= require fullcalendar/gcal
+//= require angular-ui/ui-bootstrap-tpls
+//= require angular-ui/calendar
 //= require_tree .

@@ -6,7 +6,8 @@ describe "tasks/edit" do
       :name => "MyString",
       :desc => "MyString",
       :importance => 1,
-      :urgency => 1
+      :urgency => 1,
+      :duration => 1
     ))
   end
 
@@ -19,6 +20,7 @@ describe "tasks/edit" do
       assert_select "input#task_desc[name=?]", "task[desc]"
       assert_select "input#task_importance[name=?]", "task[importance]"
       assert_select "input#task_urgency[name=?]", "task[urgency]"
+      assert_select "input#task_duration[name=?]", "task[duration]"
     end
   end
 end

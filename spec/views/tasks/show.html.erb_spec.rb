@@ -6,7 +6,8 @@ describe "tasks/show" do
       :name => "Name",
       :desc => "Desc",
       :importance => 1,
-      :urgency => 2
+      :urgency => 2,
+      :duration => 3
     ))
   end
 
@@ -17,5 +18,6 @@ describe "tasks/show" do
     rendered.should match(/Desc/)
     rendered.should match(/1/)
     rendered.should match(/2/)
+    rendered.should match(/3/)
   end
 end

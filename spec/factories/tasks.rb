@@ -6,5 +6,7 @@ FactoryGirl.define do
     desc "MyString"
     importance 1
     urgency 1
+    start "2014-05-21 21:47:29"
+    duration 1
   end
 end

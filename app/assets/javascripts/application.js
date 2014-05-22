@@ -13,6 +13,8 @@
 //= require jquery
 // require jquery_ujs
 //= require angular
+// require angular-animate
+//= require angular-resource
 //= require bootstrap
 // require jquery.ui.all
 //= require fullcalendar/fullcalendar

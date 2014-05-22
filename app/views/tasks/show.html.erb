@@ -20,5 +20,15 @@
   <%= @task.urgency %>
 </p>
 
+<p>
+  <strong>Start:</strong>
+  <%= @task.start %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @task.duration %>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

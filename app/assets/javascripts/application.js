@@ -17,8 +17,6 @@
 //= require angular-resource
 //= require bootstrap
 // require jquery.ui.all
-//= require fullcalendar/fullcalendar
-//= require fullcalendar/gcal
+
 //= require angular-ui/ui-bootstrap-tpls
-//= require angular-ui/calendar
 //= require_tree .

@@ -1,3 +1,11 @@
 // Place all the styles related to the tasks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.fc-event.event-urgency-0 {
+  color: #000077 !important;
+}
+.fc-event.event-importance-0 {
+  background-color: #ffff00 !important;
+}
+

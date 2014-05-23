@@ -2,22 +2,37 @@ angular.module('services', ['ngResource', 'ui.bootstrap.modal'])
     .factory('Task', function($resource) {
         return $resource('tasks/:id.json', {id: '@id'});
     })
+    .controller('MessageBoxController', ['$scope', 'model', function($scope, model){
+        $scope.title = model.title;
+        $scope.message = model.message;
+        $scope.buttons = model.buttons;
+    }])
     .factory('Modal', function($modal){
         var messageBox = function(title, msg, btns, callback){
             $modal.open({
-                template: msg,
+                templateUrl: 'templates/modal/message_box.tpl',
+                controller: 'MessageBoxController',
+                resolve: {
+                    model: function() {
+                        return {
+                            title: title,
+                            message: msg,
+                            buttons: btns
+                        };
+                    }
+                }
             }).result.then(function(result){
                 (callback || angular.noop)(result);
             });
         };
         return {
-            alert: function(msg){
+            alert: function(msg, title){
                 var btns = [{result:'ok', label: '确定', cssClass: 'btn-primary mini'}];
-                messageBox("提示信息", msg, btns);
+                messageBox(title || "提示信息", msg, btns);
             },
-            confirm: function(msg, succ, fail){
+            confirm: function(msg, succ, fail, title){
                 var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
-                messageBox("提示信息", msg, btns, function(result){
+                messageBox(title || "提示信息", msg, btns, function(result){
                     if(result){
                         (succ || angular.noop)();
                     }else{

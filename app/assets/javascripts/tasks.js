@@ -1,179 +1,75 @@
-/**
- * calendarDemoApp - 0.8.1
- */
+//= require modules/calendar
 
-//= require services
-angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'services']);
-
-
-function CalendarCtrl($scope, $compile, Task, Modal) {
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
-    var today = new Date();
-
-    /* event source that pulls from google.com */
-    $scope.eventSource = {
-        url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-        className: 'gcal-event',           // an option!
-        currentTimezone: 'America/Chicago' // an option!
-    };
-    /* event source that contains custom events on the scope */
-    /*$scope.events = [
-        {title: 'All Day Event',start: new Date(y, m, 1)},
-        {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-        {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-        {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-        {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-        {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-    ];
-    */
-    Modal.alert("hello");
-    $scope.events = [];
-    Task.query().$promise.then(function(data){
-        $scope.events = data;
+angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.modules', 'services'])
+    .config(function($httpProvider){
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+        $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     });
 
-    /* event source that calls a function on every view switch */
-    $scope.eventsF = function (start, end, callback) {
-        var s = new Date(start).getTime() / 1000;
-        var e = new Date(end).getTime() / 1000;
-        var m = new Date(start).getMonth();
-        var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-        callback(events);
+
+function TaskModalCtrl($scope, $modalInstance, selectedDate, Task){
+    $scope.selectedDate = selectedDate;
+    $scope.ok = function(){
+        $modalInstance.close($scope.selectedDate);
+    };
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
     };
 
-    $scope.calEventsExt = {
-        color: '#f00',
-        textColor: 'yellow',
-        events: [
-            {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-            {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-            {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-        ]
+    $scope.close = function() {
+        $modalInstance.dismiss('close');
     };
-    /* alert on eventClick */
-    $scope.alertOnEventClick = function( event, allDay, jsEvent, view ){
-        $scope.alertMessage = (event.title + ' was clicked ');
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = true;
     };
-    /* alert on Drop */
-    $scope.alertOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
-        $scope.alertMessage = ('Event Droped to make dayDelta ' + dayDelta);
-    };
-    /* alert on Resize */
-    $scope.alertOnResize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
-        $scope.alertMessage = ('Event Resized to make dayDelta ' + minuteDelta);
-    };
-    /* add and removes an event source of choice */
-    $scope.addRemoveEventSource = function(sources,source) {
-        var canAdd = 0;
-        angular.forEach(sources,function(value, key){
-            if(sources[key] === source){
-                sources.splice(key,1);
-                canAdd = 1;
-            }
+
+    $scope.task = new Task({duration: 0, importance: 0, urgency: 0});
+
+    $scope.format = 'yyyy-MM-dd';
+
+    $scope.importances = [
+        {name: '非常重要', value: 100},
+        {name: '重要', value: 80},
+        {name: '一般', value: 50},
+        {name: '不重要', value: 20},
+        {name: '非常不重要', value: 0},
+        {name: '浪费生命', value: -100}];
+    $scope.urgencies = [
+        {name: '非常紧急', value: 100},
+        {name: '紧急', value: 80},
+        {name: '一般', value: 50},
+        {name: '不紧急', value: 20},
+        {name: '非常不紧急', value: 0}];
+
+    $scope.durations = [{name: '不限时间', value: 0}, {name: '1分钟', value: MINUTE_MS}, {name: '5分钟', value: 5 * MINUTE_MS},
+        {name: '10分钟', value: 10 * MINUTE_MS}, {name: '30分钟', value: 30 * MINUTE_MS}, {name: '1小时', value: HOUR_MS},
+        {name: '2小时', value: 2 * HOUR_MS}, {name: '3小时', value: 3 * HOUR_MS}, {name: '5小时', value: 5 * HOUR_MS},
+        {name: '6小时', value: 6 * HOUR_MS}, {name: '8小时', value: 8 * HOUR_MS}, {name: '9小时', value: 9 * HOUR_MS},
+        {name: '10小时', value: 10 * HOUR_MS}, {name: '12小时', value: 12 * HOUR_MS}, {name: '1天', value: DAY_MS},
+        {name: '3天', value: 3 * DAY_MS}, {name: '10天', value: 10 * DAY_MS}, {name: '1个月', value: MONTH_MS},
+        {name: '3个月', value: 3 * MONTH_MS}, {name: '6个月', value: 6 * MONTH_MS}, {name: '9个月', value: 9 * MONTH_MS},
+        {name: '1年', value: YEAR_MS}, {name: '2年', value: 2 * YEAR_MS}, {name: '3年', value: 3 * YEAR_MS},
+        {name: '5年', value: 5 * YEAR_MS}, {name: '8年', value: 8 * YEAR_MS}, {name: '10年', value: 10 * YEAR_MS},
+        {name: '20年', value: 20 * YEAR_MS}, {name: '30年', value: 30 * YEAR_MS}, {name: '50年', value: 50 * YEAR_MS}];
+
+    $scope.doSubmit = function(){
+        $scope.task.$save();
+    }
+
+}
+
+function TaskCtrl($scope, $compile, $modal, Task, Modal) {
+    $scope.events = [];
+    Task.query().$promise.then(function(data){
+        angular.forEach(data, function(e){
+            e.url = '';
+            e.title = e.name;
+            $scope.events.push(e);
         });
-        if(canAdd === 0){
-            sources.push(source);
-        }
-    };
-    /* add custom event*/
-    $scope.addEvent = function() {
-        $scope.events.push({
-            title: 'Open Sesame',
-            start: new Date(y, m, 28),
-            end: new Date(y, m, 29),
-            className: ['openSesame']
-        });
-    };
-    /* remove event */
-    $scope.remove = function(index) {
-        $scope.events.splice(index,1);
-    };
-    /* Change View */
-    $scope.changeView = function(view, calendar) {
-        calendar.fullCalendar('changeView',view);
-    };
-    /* Change View */
-    $scope.renderCalender = function(calendar) {
-        if(calendar){
-            calendar.fullCalendar('render');
-        }
-    };
-    /* Render Tooltip */
-    $scope.eventRender = function( event, element, view ) {
-        element.attr('tooltip', event.title);
-        $compile(element)($scope);
-    };
-    /* config object */
-    $scope.uiConfig = {
-        calendar:{
-            height: 450,
-            editable: true,
-            ignoreTimezone: false,
-            header:{
-                left: 'month basicWeek basicDay',
-                center: 'title',
-                right: 'agendaWeek agendaDay, today prev,next'
-            },
-            // time formats
-            titleFormat: {
-                month: 'MMMM yyyy',
-                week: "MMMd - {MMMd}",
-                day: 'dddd, MMMd, yyyy'
-            },
-            columnFormat: {
-                month: 'ddd',
-                week: 'ddd M/d',
-                day: 'dddd M/d'
-            },
-            timeFormat: { // for event elements
-                '': 'h(:mm)t' // default
-            },
-            // locale
-            isRTL: false,
-            firstDay: 0,
-            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-            monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['日','一','二','三','四','五','六'],
-            buttonText: {
-                prev: '&nbsp;&#9668;&nbsp;',
-                next: '&nbsp;&#9658;&nbsp;',
-                prevYear: '&nbsp;&lt;&lt;&nbsp;',
-                nextYear: '&nbsp;&gt;&gt;&nbsp;',
-                today: '今天',
-                month: '月',
-                week: '星期',
-                day: '天'
-            },
-
-            eventClick: $scope.alertOnEventClick,
-            eventDrop: $scope.alertOnDrop,
-            eventResize: $scope.alertOnResize,
-            eventRender: function(event, element) {
-                var clazz = "event_at_" + event.priority;
-                if(event.start < today){
-                    clazz = "event_expired";
-                }
-                element.addClass(clazz).find('span.fc-event-title').append('<span class="pull-right"><i class="icon-pencil"></i><i class="icon-trash"><i></span>');
-                element.on('click', '.icon-trash', function(e){
-                    if(window.confirm("你真的确定要删除这个事件吗?")){
-                        $scope.$apply(function(){
-                            $scope.remove(-1, event);
-                        });
-                    }
-                    e.stopPropagation();
-                });
-            }
-            /* eventRender: $scope.eventRender*/
-        }
-    };
-
-    /* event sources array*/
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+    });
 }
 /* EOF */
 

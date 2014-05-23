@@ -1,0 +1,71 @@
+<script type="text/ng-template" id="templates/modal/message_box.tpl">
+    <div class="modal-header">
+        <h3>{{ title }}</h3>
+    </div>
+    <div class="modal-body">
+        <p>{{ message }}</p>
+    </div>
+    <div class="modal-footer">
+        <button ng-repeat="btn in buttons" ng-click="close(btn.result)" class="btn" ng-class="btn.cssClass">{{ btn.label }}</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="templates/modal/task.tpl">
+
+<form class="form-horizontal" name="taskForm" ng-submit="doSubmit()">
+    <div class="modal-header">
+        <a class="close" ng-click="close()">×</a>
+        <h3>{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row-fluid">
+            <div class="form-group">
+                <label class="control-label col-sm-3">任务名称：</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" required ng-model="task.name" placeholder="任务名称" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">开始时间：</label>
+                <div class="col-sm-8">
+                    <p class="input-group">
+                        <input type="text" class="form-control" ng-model="task.start" datepicker-popup="{{format}}" is-open="opened" close-text="Close" />
+                        <!--input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2070-05-29'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" /-->
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">持续时间：</label>
+                <div class="col-sm-8">
+                    <select ng-model="task.duration" ng-options="o.value as o.name for o in durations" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">任务描述：</label>
+                <div class="col-sm-8">
+                    <textarea ng-model="task.desc" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">重要性：</label>
+                <div class="col-sm-8">
+                    <select ng-model="task.importance" ng-options="o.value as o.name for o in importances" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">优先级：</label>
+                <div class="col-sm-8">
+                    <select ng-model="task.urgency" ng-options="o.value as o.name for o in urgencies" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn" ng-click="close()">关闭</a>
+        <button type="submit" ng-disabled="!taskForm.$valid" class="btn btn-primary">保存</button>
+    </div>
+</form>
+</script>

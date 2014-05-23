@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.where(query_params).page(params[:page]).per(params[:per_page])
   end
 
   # GET /tasks/1
@@ -70,5 +70,9 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:name, :desc, :importance, :urgency, :start, :duration)
+    end
+
+    def query_params
+      params.permit(:name, :desc, :importance, :urgency, :start, :duration)
     end
 end

@@ -21,5 +21,8 @@ module ISharing
     # config.i18n.default_locale = :de
 
     config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
+
+    config.time_zone = 'Beijing'
+    config.active_record.default_timezone = :local
   end
 end

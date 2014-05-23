@@ -29,13 +29,11 @@
                 <td><%= task.urgency %></td>
                 <td><%= task.start %></td>
                 <td><%= task.duration %></td>
-                <td><%= link_to 'Show', task %></td>
-                <td><%= link_to 'Edit', edit_task_path(task) %></td>
-                <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
             <% end %>
             </tbody>
         </table>
+        <%= paginate @tasks %>
     </div>
     <div class="col-sm-7" ng-controller="CalendarController">
         <div class="calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar"></div>

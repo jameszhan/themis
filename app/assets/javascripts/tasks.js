@@ -80,7 +80,7 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
 
 function TaskCtrl($scope, $compile, $modal, Task) {
     $scope.events = [];
-    Task.query().$promise.then(function(data){
+    Task.query({urgency: 0}).$promise.then(function(data){
         angular.forEach(data, function(e){
             e.url = '';
             e.title = e.name;

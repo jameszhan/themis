@@ -40,25 +40,27 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 
-gem "simple_form"
-gem "angularjs-rails"
+gem 'kaminari'
+
+gem 'simple_form'
+gem 'angularjs-rails'
 group :development do
-  gem "pry"
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'pry'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do
-  gem "spring-commands-rspec"
-  gem "rspec-rails"
-  gem "factory_girl_rails"
-  gem "guard-rspec"
-  gem "rb-fsevent"
+  gem 'spring-commands-rspec'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec'
+  gem 'rb-fsevent'
 end
 
 group :test do
-  gem "faker"
-  gem "capybara"
-  gem "launchy"
-  gem "database_cleaner"
+  gem 'faker'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
 end

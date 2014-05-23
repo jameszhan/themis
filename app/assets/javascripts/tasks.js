@@ -10,7 +10,6 @@ var MINUTE_MS = 60 * 1000,
 
 angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources'])
 
-
 function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
     $scope.ok = function(){
         $modalInstance.close($scope.selectedTask);
@@ -80,13 +79,17 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
 
 function TaskCtrl($scope, $compile, $modal, Task) {
     $scope.events = [];
-    Task.query({urgency: 0}).$promise.then(function(data){
-        angular.forEach(data, function(e){
-            e.url = '';
-            e.title = e.name;
-            $scope.events.push(e);
+
+    $scope.viewRender = function(view, el){
+        $scope.events.length = 0; //clear the array.
+        Task.query({dateStart: view.visStart.getTime() / 1000, dateEnd: view.visEnd.getTime() / 1000}).$promise.then(function(data){
+            angular.forEach(data, function(e){
+                e.url = '';
+                e.title = e.name;
+                $scope.events.push(e);
+            });
         });
-    });
+    };
 
     /* remove event */
     $scope.remove = function(id) {

@@ -24,10 +24,13 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
             }
         };
 
+
         /* Change View */
         $scope.changeView = function(view, calendar) {
+            console.log(arguments);
             calendar.fullCalendar('changeView',view);
         };
+
         /* Change View */
         $scope.renderCalender = function(calendar) {
             if(calendar){
@@ -98,6 +101,7 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
                 eventClick: $scope.eventOnClick || angular.noop,
                 eventDrop: $scope.eventOnDrop || angular.noop,
                 eventResize: $scope.eventOnResize || angular.noop,
+                viewRender: $scope.viewRender || angular.noop,
                 eventRender: $scope.eventRender
             }
         };

@@ -1,10 +1,6 @@
 //= require modules/calendar
 
 angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources'])
-    .config(function($httpProvider){
-        var csrfToken = $("meta[name='csrf-token']").attr("content");
-        $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-    });
 
 
 function TaskModalCtrl($scope, $modalInstance, selectedDate, Task){

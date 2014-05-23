@@ -1,15 +1,12 @@
-angular.module('services', ['ngResource', 'ui.bootstrap.modal'])
-    .factory('Task', function($resource) {
-        return $resource('tasks/:id.json', {id: '@id'});
-    })
+angular.module('local.services', ['ngResource', 'ui.bootstrap.modal'])
     .controller('MessageBoxController', ['$scope', 'model', function($scope, model){
         $scope.title = model.title;
         $scope.message = model.message;
         $scope.buttons = model.buttons;
     }])
     .factory('Modal', function($modal){
-        var messageBox = function(title, msg, btns, callback){
-            $modal.open({
+        var messageBox = function(title, msg, btns){
+            return $modal.open({
                 templateUrl: 'templates/modal/message_box.tpl',
                 controller: 'MessageBoxController',
                 resolve: {
@@ -21,9 +18,7 @@ angular.module('services', ['ngResource', 'ui.bootstrap.modal'])
                         };
                     }
                 }
-            }).result.then(function(result){
-                (callback || angular.noop)(result);
-            });
+            }).result;
         };
         return {
             alert: function(msg, title){

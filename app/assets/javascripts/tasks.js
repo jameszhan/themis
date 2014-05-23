@@ -1,6 +1,6 @@
 //= require modules/calendar
 
-angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.modules', 'services'])
+angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources'])
     .config(function($httpProvider){
         var csrfToken = $("meta[name='csrf-token']").attr("content");
         $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
@@ -55,13 +55,19 @@ function TaskModalCtrl($scope, $modalInstance, selectedDate, Task){
         {name: '5年', value: 5 * YEAR_MS}, {name: '8年', value: 8 * YEAR_MS}, {name: '10年', value: 10 * YEAR_MS},
         {name: '20年', value: 20 * YEAR_MS}, {name: '30年', value: 30 * YEAR_MS}, {name: '50年', value: 50 * YEAR_MS}];
 
-    $scope.doSubmit = function(){
-        $scope.task.$save();
+    $scope.doSubmit = function() {
+        $scope.task.$save()
+            .then(function(data) {
+                console.log("saved: ", data);
+            })
+            .finally(function() {
+                $modalInstance.dismiss('close');
+            });
     }
 
 }
 
-function TaskCtrl($scope, $compile, $modal, Task, Modal) {
+function TaskCtrl($scope, $compile, $modal, Task) {
     $scope.events = [];
     Task.query().$promise.then(function(data){
         angular.forEach(data, function(e){
@@ -70,6 +76,22 @@ function TaskCtrl($scope, $compile, $modal, Task, Modal) {
             $scope.events.push(e);
         });
     });
+
+    $scope.dayClick = function(date, allDay, event, view){
+        $modal.open({
+            templateUrl: 'templates/modal/task.tpl',
+            size: 'md', //'sm', 'lg'
+            controller: 'TaskModalCtrl',
+            scope: $scope,
+            resolve: {
+                selectedDate: function(){
+                    return date;
+                }
+            }
+        }).result.then(function(r){
+
+            });
+    };
 }
 /* EOF */
 

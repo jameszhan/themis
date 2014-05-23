@@ -13,7 +13,7 @@ var MINUTE_MS = 60 * 1000,
     MONTH_MS = DAY_MS * 30,
     YEAR_MS = DAY_MS * 365;
 
-angular.module('local.modules', ['ui.calendar', 'ui.bootstrap'])
+angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap'])
     .controller('CalendarController', ['$scope', '$compile', function($scope, $compile){
         var date = new Date();
         var d = date.getDate();
@@ -108,21 +108,7 @@ angular.module('local.modules', ['ui.calendar', 'ui.bootstrap'])
             $compile(el)($scope);
         };
 
-        $scope.dayClick = function(date, allDay, event, view){
-            $modal.open({
-                templateUrl: 'templates/modal/task.tpl',
-                size: 'md', //'sm', 'lg'
-                controller: 'TaskModalCtrl',
-                scope: $scope,
-                resolve: {
-                    selectedDate: function(){
-                        return date;
-                    }
-                }
-            }).result.then(function(r){
 
-                });
-        };
         /* config object */
         $scope.uiConfig = {
             calendar:{
@@ -165,7 +151,7 @@ angular.module('local.modules', ['ui.calendar', 'ui.bootstrap'])
                     week: '星期',
                     day: '天'
                 },
-                dayClick: angular.noop,//$scope.dayClick,
+                dayClick: $scope.dayClick || angular.noop,
                 eventClick: angular.noop,//$scope.alertOnEventClick,
                 eventDrop: angular.noop, //$scope.eventOnDrop,
                 eventResize: angular.noop, //$scope.alertOnResize,

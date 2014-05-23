@@ -1,4 +1,4 @@
-angular.module('local.globals')
+angular.module('local.globals', [])
     .factory('Lunar', function(){
         var MINUTE_MS = 60 * 1000,
             HOUR_MS = MINUTE_MS * 60,
@@ -26,7 +26,7 @@ angular.module('local.globals')
              * 中间12位，即4bd，每位代表一个月，为1则为大月，为0则为小月。
              * 最后4位，即8，代表这一年的润月月份，为0则不润。首4位要与末4位搭配使用。
              */
-                lunarInfo = [
+            lunarInfo = [
                 0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,    // 1910
                 0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977,    // 1920
                 0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970,    // 1930
@@ -125,7 +125,7 @@ angular.module('local.globals')
             if (date < MIN_YEAR && date > MAX_YEAR) {
                 throw new Error("Overflow, " + date + " not in [" + MIN_YEAR + ", " + MAX_YEAR + "]");
             }
-            offset = (date - BASE_DATE) / DAY_MS;  //距离最早日期的天数
+            offset = Math.floor((date - BASE_DATE) / DAY_MS);  //距离最早日期的天数
             for (i = MIN_YEAR; i < MAX_YEAR; i++) {
                 tmp = lunarYearDays(i);
                 if (offset - tmp < 1) {
@@ -141,6 +141,7 @@ angular.module('local.globals')
             for (i = 1; i <= 12; i++) {
                 if (leapMonth > 0 && i == leapMonth + 1 && !_isLeapMonth) {
                     _isLeapMonth = true;
+                    --i;
                     tmp = lunarLeapMonthDays(_year); //计算闰月天数
                 } else {
                     _isLeapMonth = false;
@@ -152,7 +153,7 @@ angular.module('local.globals')
                 offset -= tmp;
             }
             _month = i;
-            _day = Math.floor(offset);
+            _day = offset;
             return {
                 year: _year,
                 month: _month,

@@ -9,7 +9,7 @@
 //= require modules/services
 
 angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services'])
-    .controller('CalendarController', ['$scope', '$compile', 'Modal', function($scope, $compile, Modal){
+    .controller('CalendarController', ['$scope', '$compile', 'Modal', 'Lunar', function($scope, $compile, Modal, Lunar){
         /* add and removes an event source of choice */
         $scope.addRemoveEventSource = function(sources, source) {
             var canAdd = 0;
@@ -27,7 +27,6 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
 
         /* Change View */
         $scope.changeView = function(view, calendar) {
-            console.log(arguments);
             calendar.fullCalendar('changeView',view);
         };
 
@@ -101,7 +100,14 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
                 eventClick: $scope.eventOnClick || angular.noop,
                 eventDrop: $scope.eventOnDrop || angular.noop,
                 eventResize: $scope.eventOnResize || angular.noop,
-                viewRender: $scope.viewRender || angular.noop,
+                viewRender: function(view, el){
+                    el.find(".fc-day").each(function(i, e){
+                        var $this = $(e),
+                            lunar = Lunar.t(new Date($this.data('date')));
+                        $this.prepend("<span class='lunar'>" + lunar.toMonth() + lunar.toDay() + "</span>");
+                    });
+                    return ($scope.updateResources || angular.noop)(view);
+                },
                 eventRender: $scope.eventRender
             }
         };

@@ -6,46 +6,12 @@
 //= require fullcalendar/fullcalendar
 //= require fullcalendar/gcal
 //= require angular-ui/calendar
+//= require modules/services
 
-var MINUTE_MS = 60 * 1000,
-    HOUR_MS = MINUTE_MS * 60,
-    DAY_MS  = HOUR_MS * 24,
-    MONTH_MS = DAY_MS * 30,
-    YEAR_MS = DAY_MS * 365;
-
-angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap'])
-    .controller('CalendarController', ['$scope', '$compile', function($scope, $compile){
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-        var today = new Date();
-
-        /* alert on eventClick */
-        $scope.alertOnEventClick = function( event, allDay, jsEvent, view ){
-            $scope.alertMessage = (event.title + ' was clicked ');
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
-        };
-        /* alert on Drop */
-        $scope.alertOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
-            $scope.alertMessage = ('Event Droped to make dayDelta ' + dayDelta);
-        };
-
-        $scope.eventOnDrop = function(event, day_delta, minute_delta, all_day, revert_func, js_event, ui, view){
-            console.log(arguments);
-            $scope.$apply(function(){
-
-            });
-        };
-
-        /* alert on Resize */
-        $scope.alertOnResize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
-            $scope.alertMessage = ('Event Resized to make dayDelta ' + minuteDelta);
-        };
+angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services'])
+    .controller('CalendarController', ['$scope', '$compile', 'Modal', function($scope, $compile, Modal){
         /* add and removes an event source of choice */
-        $scope.addRemoveEventSource = function(sources,source) {
+        $scope.addRemoveEventSource = function(sources, source) {
             var canAdd = 0;
             angular.forEach(sources,function(value, key){
                 if(sources[key] === source){
@@ -57,28 +23,7 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap'])
                 sources.push(source);
             }
         };
-        /* add custom event*/
-        $scope.addEvent = function() {
-            $scope.events.push({
-                title: 'Open Sesame',
-                start: new Date(y, m, 28),
-                end: new Date(y, m, 29),
-                className: ['openSesame']
-            });
-        };
-        /* remove event */
-        $scope.remove = function(id) {
-            var index = -1;
-            for(var i = 0; i < $scope.events.length; i++) {
-                if (id == $scope.events[i].id) {
-                    index = i;
-                    break;
-                }
-            }
-            if (index >= 0) {
-                $scope.events.splice(index, 1);
-            }
-        };
+
         /* Change View */
         $scope.changeView = function(view, calendar) {
             calendar.fullCalendar('changeView',view);
@@ -91,17 +36,15 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap'])
         };
 
         $scope.eventRender = function(event, el, view) {
-            //el.attr('tooltip', event.title);
+            el.attr('tooltip', event.desc);
             el.addClass("event-urgency-" + event.urgency)
                 .addClass("event-importance-" + event.urgency)
                 .find('span.fc-event-title')
                 .append('<span class="pull-right"><i class="glyphicon glyphicon-pencil"></i><i class="glyphicon glyphicon-trash"><i></span>');
             el.on('click', '.glyphicon-trash', function(e){
-                if(window.confirm("你真的确定要删除这个事件吗?")){
-                    $scope.$apply(function(){
-                        $scope.remove(event.id);
-                    });
-                }
+                Modal.confirm("你真的确定要删除这个事件吗?", function(){
+                    $scope.remove(event.id);
+                });
                 e.stopPropagation();
             });
 
@@ -152,9 +95,9 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap'])
                     day: '天'
                 },
                 dayClick: $scope.dayClick || angular.noop,
-                eventClick: angular.noop,//$scope.alertOnEventClick,
-                eventDrop: angular.noop, //$scope.eventOnDrop,
-                eventResize: angular.noop, //$scope.alertOnResize,
+                eventClick: $scope.eventOnClick || angular.noop,
+                eventDrop: $scope.eventOnDrop || angular.noop,
+                eventResize: $scope.eventOnResize || angular.noop,
                 eventRender: $scope.eventRender
             }
         };

@@ -19,4 +19,6 @@
 // require jquery.ui.all
 
 //= require angular-ui/ui-bootstrap-tpls
-//= require_tree .
+// require_tree .
+
+//= require tasks

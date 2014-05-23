@@ -1,5 +1,8 @@
 <div ng-include=" 'templates/modal.html' "></div>
 
+<div class="alert-success calAlert" ng-show="alertMessage">{{alertMessage}}</div>
+
+
 <%= link_to 'New Task', new_task_path %>
 <div class="row" ng-controller="TaskCtrl">
     <div class="col-sm-5">

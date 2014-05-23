@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521134729) do
+ActiveRecord::Schema.define(version: 20140523050534) do
 
   create_table "tasks", force: true do |t|
     t.string   "name"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20140521134729) do
     t.integer  "importance"
     t.integer  "urgency"
     t.datetime "start"
-    t.integer  "duration"
+    t.integer  "duration",   limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end

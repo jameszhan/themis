@@ -4,5 +4,5 @@ angular.module('local.resources', ['ngResource', 'ui.bootstrap.modal'])
         $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     })
     .factory('Task', function($resource) {
-        return $resource('tasks/:id.json', {id: '@id'});
+        return $resource('api/v1/tasks/:id', {id: '@id'}, {update: {method: 'PUT'}});
     });

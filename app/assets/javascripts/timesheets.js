@@ -3,7 +3,7 @@
 
 angular.module('timeSheetsApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources']);
 
-function TimesheetCtrl($scope, $compile, $modal, Timesheet) {
+function TimesheetCtrl($scope, $modal, Timesheet) {
     $scope.events = [];
 
     $scope.updateResources = function(view){
@@ -42,28 +42,42 @@ function TimesheetCtrl($scope, $compile, $modal, Timesheet) {
     };
 
     $scope.eventOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, $event, ui, view){
-        Task.update({id: event.id}, event);
+        Timesheet.update({id: event.id}, event);
     };
 
     $scope.eventOnResize = function(){
         console.log(arguments);
     };
 
-    function openTaskModal(task, date){
+    function openTaskModal(timesheet, date){
         return $modal.open({
-            templateUrl: 'templates/modal/task.tpl',
+            templateUrl: 'templates/modal/timesheet.tpl',
             size: 'md', //'sm', 'lg'
-            controller: 'TaskModalCtrl',
+            controller: 'TimesheetModalCtrl',
             scope: $scope,
             resolve: {
-                selectedTask: function(){
-                    if (!task) {
-                        return new Task({duration: 0, importance: 0, urgency: 0, start: date});
+                selectedTimesheet: function(){
+                    if (!timesheet) {
+                        return new Timesheet({duration: 0, importance: 0, urgency: 0, start: date});
                     }
-                    return task;
+                    return timesheet;
                 }
             }
-        }).result;
+        }).opened;
     }
 }
-/* EOF */
+
+function TimesheetModalCtrl($scope, $modalInstance, Modal, selectedTimesheet) {
+    Modal.closable($scope, $modalInstance);
+    $scope.title = '时间表';
+    $scope.timesheet = selectedTimesheet;
+    $scope.dateFormat = 'yyyy-MM-dd';
+    $scope.timeFormat = "hh:mm:ss";
+
+    $scope.open = function($event, whichKey) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope[whichKey] = true;
+    };
+
+}

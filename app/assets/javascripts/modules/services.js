@@ -41,6 +41,14 @@ angular.module('local.services', ['ngResource', 'ui.bootstrap.modal'])
             confirm: function(msg, succ, fail, title){
                 var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
                 return messageBox(title || "提示信息", msg, btns, succ, fail);
+            },
+            closable: function($scope, $modalInstance){
+                $scope.cancel = function() {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.close = function() {
+                    $modalInstance.dismiss('close');
+                };
             }
         };
     });

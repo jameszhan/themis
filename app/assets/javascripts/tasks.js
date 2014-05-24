@@ -10,25 +10,16 @@ var MINUTE_MS = 60 * 1000,
 
 angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources']);
 
-function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
-    $scope.ok = function(){
-        $modalInstance.close($scope.selectedTask);
-    };
-    $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
-    };
-
-    $scope.close = function() {
-        $modalInstance.dismiss('close');
-    };
+function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
+    Modal.closable($scope, $modalInstance);
+    $scope.title = "任务";
+    $scope.task = selectedTask;
 
     $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened = true;
     };
-
-    $scope.task = selectedTask;
 
     $scope.format = 'yyyy-MM-dd';
 
@@ -77,7 +68,7 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
 
 }
 
-function TaskCtrl($scope, $compile, $modal, Task) {
+function TaskCtrl($scope, $modal, Task) {
     $scope.events = [];
 
     $scope.updateResources = function(view){
@@ -135,7 +126,7 @@ function TaskCtrl($scope, $compile, $modal, Task) {
                     return task;
                 }
             }
-        }).result;
+        }).opened;
     }
 }
 /* EOF */

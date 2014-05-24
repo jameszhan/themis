@@ -1,5 +1,5 @@
 json.array!(@timesheets) do |timesheet|
-  json.extract! timesheet, :id, :title, :desc, :start_time, :end_time
-  json.start timesheet.start_time
-  json.end   timesheet.end_time
+  json.extract! timesheet, :id, :title, :category_id, :desc, :started_at, :completed_at
+  json.start timesheet.started_at
+  json.end   timesheet.completed_at
 end

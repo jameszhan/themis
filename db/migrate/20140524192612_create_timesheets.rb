@@ -4,8 +4,8 @@ class CreateTimesheets < ActiveRecord::Migration
       t.string :title
       t.belongs_to :category, index: true
       t.string :desc
-      t.datetime :start_time
-      t.datetime :end_time
+      t.datetime :started_at
+      t.datetime :completed_at
 
       t.timestamps
     end

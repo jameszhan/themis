@@ -91,12 +91,12 @@
                     <div class="col-sm-6">
                         <a class="dropdown-toggle" id="startTimeToggle" role="button" data-toggle="dropdown" data-target="#" href="#">
                             <div class="input-group">
-                                <input placeholder="yyyy-MM-dd hh:mm:ss" type="text" class="form-control" data-ng-model="timesheet.startTime" />
+                                <input placeholder="yyyy-MM-dd hh:mm:ss" type="text" class="form-control" data-ng-model="timesheet.started_at" />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="timesheet.startTime" data-datetimepicker-config="{ dropdownSelector: '#startTimeToggle' }"/>
+                            <datetimepicker data-ng-model="timesheet.started_at" data-datetimepicker-config="{ minView: 'hour', dropdownSelector: '#startTimeToggle' }" />
                         </ul>
                     </div>
                 </div>
@@ -105,19 +105,19 @@
                     <div class="col-sm-6">
                         <a class="dropdown-toggle" id="endTimeToggle" role="button" data-toggle="dropdown" data-target="#" href="#">
                             <div class="input-group">
-                                <input type="text" class="form-control" data-ng-model="timesheet.endTime" />
+                                <input placeholder="yyyy-MM-dd hh:mm:ss" type="text" class="form-control" data-ng-model="timesheet.completed_at" />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="timesheet.endTime" data-datetimepicker-config="{ dropdownSelector: '#endTimeToggle' }"/>
+                            <datetimepicker data-ng-model="timesheet.completed_at" data-datetimepicker-config="{ minView: 'hour', dropdownSelector: '#endTimeToggle' }" />
                         </ul>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">类别：</label>
                     <div class="col-sm-5">
-                        <select ng-model="timesheet.categoryId" ng-options="o.id as o.name for o in categories" class="form-control"></select>
+                        <select ng-model="timesheet.category_id" ng-options="o.id as o.name for o in categories" class="form-control"></select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -130,7 +130,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="close()">关闭</button>
-            <button type="submit" ng-disabled="!taskForm.$valid" class="btn btn-primary">保存</button>
+            <button type="submit" ng-disabled="!timesheetForm.$valid" class="btn btn-primary">保存</button>
         </div>
     </form>
 </script>

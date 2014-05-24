@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524175959) do
+ActiveRecord::Schema.define(version: 20140524192612) do
 
   create_table "tasks", force: true do |t|
     t.string   "name"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20140524175959) do
     t.string   "title"
     t.integer  "category_id"
     t.string   "desc"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "started_at"
+    t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

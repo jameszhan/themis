@@ -9,10 +9,8 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
 
     $scope.updateResources = function(view){
         $scope.events.length = 0; //clear the array.
-        Timesheet.query({dateStart: view.visStart.getTime() / 1000, dateEnd: view.visEnd.getTime() / 1000}).$promise.then(function(data){
+        Timesheet.query({started_at: view.visStart.getTime() / 1000, stoped_at: view.visEnd.getTime() / 1000}).$promise.then(function(data){
             angular.forEach(data, function(e){
-                e.url = '';
-                e.title = e.name;
                 $scope.events.push(e);
             });
         });
@@ -43,6 +41,9 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
     };
 
     $scope.eventOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, $event, ui, view){
+        event.completed_at = event.start;
+        event.started_at = event.start;
+
         Timesheet.update({id: event.id}, event);
     };
 
@@ -59,7 +60,7 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
             resolve: {
                 selectedTimesheet: function(){
                     if (!timesheet) {
-                        return new Timesheet({categoryId: 1, startTime: date, endTime: date});
+                        return new Timesheet({category_id: 1, started_at: date, completed_at: date});
                     }
                     return timesheet;
                 }
@@ -68,12 +69,10 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
     }
 }
 
-function TimesheetModalCtrl($scope, $modalInstance, Modal, selectedTimesheet, Config) {
+function TimesheetModalCtrl($scope, $modalInstance, Modal, Timesheet, selectedTimesheet, Config) {
     Modal.closable($scope, $modalInstance);
     $scope.title = '时间表';
     $scope.timesheet = selectedTimesheet;
-    $scope.dateFormat = 'yyyy-MM-dd';
-    $scope.timeFormat = "hh:mm:ss";
 
     $scope.open = function($event, whichKey) {
         $event.preventDefault();
@@ -85,4 +84,20 @@ function TimesheetModalCtrl($scope, $modalInstance, Modal, selectedTimesheet, Co
     Config.categories().$promise.then(function(data){
         $scope.categories = data;
     });
+
+    $scope.doSubmit = function() {
+        if (!$scope.timesheet.id) {
+            $scope.timesheet.$save()
+                .then(function(e) {
+                    $scope.events.push(e);
+                })
+                .finally(function() {
+                    $modalInstance.dismiss('close');
+                });
+        } else {
+            Timesheet.update({id: $scope.timesheet.id}, $scope.timesheet).$promise.then(function(){
+                $modalInstance.dismiss('close');
+            });
+        }
+    }
 }

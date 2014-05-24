@@ -5,7 +5,7 @@ FactoryGirl.define do
     title "MyString"
     category nil
     desc "MyString"
-    start_time "2014-05-25 01:59:59"
-    end_time "2014-05-25 01:59:59"
+    started_at "2014-05-25 03:26:12"
+    completed_at "2014-05-25 03:26:12"
   end
 end

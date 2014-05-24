@@ -5,8 +5,8 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = Task.where(query_params)
-    if params[:dateStart] && params[:dateEnd]
-      @tasks = @tasks.start_between(Time.at(params[:dateStart].to_i), Time.at(params[:dateEnd].to_i))
+    if params[:started_at] && params[:stopped_at]
+      @tasks = @tasks.start_between(Time.at(params[:started_at].to_i), Time.at(params[:stopped_at].to_i))
     end
     @tasks = @tasks.page(params[:page]).per(params[:per_page])
   end

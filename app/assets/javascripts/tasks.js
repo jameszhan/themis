@@ -53,8 +53,6 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
         if (!$scope.task.id) {
             $scope.task.$save()
                 .then(function(e) {
-                    e.url = '';
-                    e.title = e.name;
                     $scope.events.push(e);
                 })
                 .finally(function() {
@@ -74,7 +72,7 @@ function TaskCtrl($scope, $modal, Task) {
 
     $scope.updateResources = function(view){
         $scope.events.length = 0; //clear the array.
-        Task.query({dateStart: view.visStart.getTime() / 1000, dateEnd: view.visEnd.getTime() / 1000}).$promise.then(function(data){
+        Task.query({started_at: view.visStart.getTime() / 1000, stoped_at: view.visEnd.getTime() / 1000}).$promise.then(function(data){
             angular.forEach(data, function(e){
                 $scope.events.push(e);
             });

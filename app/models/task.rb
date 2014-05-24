@@ -1,3 +1,3 @@
 class Task < ActiveRecord::Base
-  scope :start_between, lambda{|start_date, end_date| where('start BETWEEN ? AND ?', start_date, end_date)}
+  scope :start_between, lambda{|started_at, stopped_at| where('start BETWEEN ? AND ?', started_at, stopped_at)}
 end

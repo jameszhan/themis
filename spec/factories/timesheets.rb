@@ -3,8 +3,9 @@
 FactoryGirl.define do
   factory :timesheet do
     title "MyString"
+    category nil
     desc "MyString"
-    start_time "2014-05-24 14:22:45"
-    end_time "2014-05-24 14:22:45"
+    start_time "2014-05-25 01:59:59"
+    end_time "2014-05-25 01:59:59"
   end
 end

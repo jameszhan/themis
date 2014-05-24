@@ -7,6 +7,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :tasks, only: [:index, :create, :update, :destroy]
       resources :timesheets, only: [:index, :create, :update, :destroy]
+      resources :config do
+        collection do
+          get 'categories'
+        end
+      end
     end
   end
 

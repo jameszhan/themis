@@ -18,12 +18,13 @@ angular.module('ui.bootstrap.datetimepicker', [])
         minuteStep: 5,
         minView: 'minute',
         startView: 'day',
-        weekStart: 0
+        weekStart: 0,
+        format: 'yyyy-MM-dd hh:mm:ss'
     })
     .constant('dateTimePickerConfigValidation', function (configuration) {
         "use strict";
 
-        var validOptions = ['startView', 'minView', 'minuteStep', 'dropdownSelector', 'weekStart'];
+        var validOptions = ['startView', 'minView', 'minuteStep', 'dropdownSelector', 'weekStart', 'format'];
 
         for (var prop in configuration) {
             if (configuration.hasOwnProperty(prop)) {
@@ -66,7 +67,7 @@ angular.module('ui.bootstrap.datetimepicker', [])
         }
     }
 )
-    .directive('datetimepicker', ['dateTimePickerConfig', 'dateTimePickerConfigValidation', function (defaultConfig, validateConfigurationFunction) {
+    .directive('datetimepicker', ['$document', 'dateTimePickerConfig', 'dateTimePickerConfigValidation', 'dateFilter', function($document, defaultConfig, validateConfigurationFunction, dateFilter) {
         "use strict";
 
         return {
@@ -112,8 +113,7 @@ angular.module('ui.bootstrap.datetimepicker', [])
                 onSetTime: "="
             },
             replace: true,
-            link: function (scope, element, attrs) {
-
+            link: function (scope, element, attrs, ngModel) {
                 var directiveConfig = {};
 
                 if (attrs.datetimepickerConfig) {
@@ -335,6 +335,34 @@ angular.module('ui.bootstrap.datetimepicker', [])
                 scope.$watch('ngModel', function () {
                     scope.changeView(scope.data.currentView, getUTCTime());
                 });
+
+                // Outter change
+                ngModel.$render = function() {
+                    var date = ngModel.$viewValue ? dateFilter(ngModel.$viewValue, configuration.format) : '';
+                    $document.find(configuration.dropdownSelector).find('input[data-ng-model]').val(date);
+                };
+
+                function parseDate(viewValue) {
+                    if (!viewValue) {
+                        ngModel.$setValidity('date', true);
+                        return null;
+                    } else if (angular.isDate(viewValue) && !isNaN(viewValue)) {
+                        ngModel.$setValidity('date', true);
+                        return viewValue;
+                    } else if (angular.isString(viewValue)) {
+                        var date = dateParser.parse(viewValue, dateFormat) || new Date(viewValue);
+                        if (isNaN(date)) {
+                            ngModel.$setValidity('date', false);
+                            return undefined;
+                        } else {
+                            ngModel.$setValidity('date', true);
+                            return date;
+                        }
+                    } else {
+                        ngModel.$setValidity('date', false);
+                        return undefined;
+                    }
+                }
             }
         };
     }]);

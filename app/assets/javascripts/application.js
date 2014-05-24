@@ -16,6 +16,7 @@
 // require angular-animate
 //= require angular-resource
 //= require bootstrap
+//= require moment
 // require jquery.ui.all
 
 //= require angular-ui/ui-bootstrap-tpls

@@ -1,1 +1,0 @@
-angular.module('local.directives', []);

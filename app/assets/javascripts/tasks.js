@@ -1,5 +1,6 @@
 //= require modules/calendar
 //= require modules/resources
+//= require modules/datetimepicker
 
 
 var MINUTE_MS = 60 * 1000,
@@ -8,7 +9,7 @@ var MINUTE_MS = 60 * 1000,
     MONTH_MS = DAY_MS * 30,
     YEAR_MS = DAY_MS * 365;
 
-angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources']);
+angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.calendar', 'local.resources']);
 
 function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
     Modal.closable($scope, $modalInstance);
@@ -129,5 +130,3 @@ function TaskCtrl($scope, $modal, Task) {
         }).opened;
     }
 }
-/* EOF */
-

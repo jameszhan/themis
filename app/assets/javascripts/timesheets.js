@@ -59,7 +59,7 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
             resolve: {
                 selectedTimesheet: function(){
                     if (!timesheet) {
-                        return new Timesheet({duration: 0, importance: 0, urgency: 0, start: date});
+                        return new Timesheet({categoryId: 1, startTime: date, endTime: date});
                     }
                     return timesheet;
                 }
@@ -68,7 +68,7 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
     }
 }
 
-function TimesheetModalCtrl($scope, $modalInstance, Modal, selectedTimesheet) {
+function TimesheetModalCtrl($scope, $modalInstance, Modal, selectedTimesheet, Config) {
     Modal.closable($scope, $modalInstance);
     $scope.title = '时间表';
     $scope.timesheet = selectedTimesheet;
@@ -81,4 +81,8 @@ function TimesheetModalCtrl($scope, $modalInstance, Modal, selectedTimesheet) {
         $scope[whichKey] = true;
     };
 
+    $scope.categories = [];
+    Config.categories().$promise.then(function(data){
+        $scope.categories = data;
+    });
 }

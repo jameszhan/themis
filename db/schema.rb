@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524062245) do
+ActiveRecord::Schema.define(version: 20140524175959) do
 
   create_table "tasks", force: true do |t|
     t.string   "name"
@@ -26,11 +26,14 @@ ActiveRecord::Schema.define(version: 20140524062245) do
 
   create_table "timesheets", force: true do |t|
     t.string   "title"
+    t.integer  "category_id"
     t.string   "desc"
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "timesheets", ["category_id"], name: "index_timesheets_on_category_id", using: :btree
 
 end

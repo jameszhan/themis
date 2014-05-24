@@ -53,7 +53,6 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
             $compile(el)($scope);
         };
 
-
         /* config object */
         $scope.uiConfig = {
             calendar:{
@@ -104,7 +103,7 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
                     el.find(".fc-day").each(function(i, e){
                         var $this = $(e),
                             lunar = Lunar.t(new Date($this.data('date')));
-                        $this.prepend("<span class='lunar'>" + lunar.toMonth() + lunar.toDay() + "</span>");
+                        $this.prepend("<b class='lunar'>" + lunar.toString() + "</b>");
                     });
                     return ($scope.updateResources || angular.noop)(view);
                 },

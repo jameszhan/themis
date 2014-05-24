@@ -1,5 +1,6 @@
 angular.module('local.globals', [])
     .factory('Lunar', function(){
+        'use strict';
         var MINUTE_MS = 60 * 1000,
             HOUR_MS = MINUTE_MS * 60,
             DAY_MS  = HOUR_MS * 24,
@@ -19,6 +20,17 @@ angular.module('local.globals', [])
             monthNames = [ "正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "冬", "腊"],
             dayNames = ["初一","初二","初三","初四","初五","初六","初七","初八","初九","初十", "十一","十二","十三",
                 "十四","十五","十六","十七","十八","十九","二十", "廿一","廿二","廿三","廿四","廿五","廿六","廿七","廿八","廿九","三十"],
+            lunarFestivals = {
+                "1-1": '春节',
+                "1-15": "元宵节",
+                "5-5": "端午节",
+                "7-7": "七夕",
+                "7-15": "中元节",
+                "8-15": "中秋节",
+                "9-9": "重阳节",
+                "12-8": "腊八节",
+                "12-14": "小年"
+            },
             /**
              * 年基础数据表(1901 ~ 2050)
              *
@@ -96,6 +108,14 @@ angular.module('local.globals', [])
             return (lunarInfo[year - MIN_YEAR] & (0x10000 >> month)) ? 30 : 29;
         }
 
+        function lunarFestival(year, month, day){
+            if (month == 12 && day == lunarMonthDays(year, month)) {
+                return '除夕';
+            } else {
+                return lunarFestivals[month + "-" + day];
+            }
+        }
+
         /**
          *  定气法计算二十四节气,二十四节气是按地球公转来计算的，并非是阴历计算的
          *  节气的定法有两种。古代历法采用的称为"恒气"，即按时间把一年等分为24份，
@@ -117,7 +137,7 @@ angular.module('local.globals', [])
                     return solarTerms[i - 1];
                 }
             }
-            return '';
+            return null;
         }
 
         function lunar(date) {
@@ -210,6 +230,11 @@ angular.module('local.globals', [])
                 },
                 toLunarString: function(){
                     return this.toLunarYear() + (_isLeapMonth ? '闰' : '') + this.toLunarMonth() + this.toLunarDay();
+                },
+                toString: function(){
+                    return lunarFestival(_year, _month, _day)
+                        || this.toSolarTerm()
+                        || (_isLeapMonth ? '闰' : '') + this.toMonth() + this.toDay();
                 },
                 toMonth: function(){
                     return monthNames[_month - 1] + '月';

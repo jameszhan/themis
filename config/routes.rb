@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   resources :tasks
 
+  get 'timesheets' => 'timesheets#index'
+
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
-        resources :tasks, only: [:index, :create, :update, :destroy]
+      resources :tasks, only: [:index, :create, :update, :destroy]
+      resources :timesheets, only: [:index, :create, :update, :destroy]
     end
   end
 

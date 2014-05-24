@@ -21,5 +21,3 @@
 //= require angular-ui/ui-bootstrap-tpls
 // require_tree .
 
-//= require tasks
-

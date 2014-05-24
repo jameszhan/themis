@@ -1,0 +1,7 @@
+<div ng-include=" 'templates/modal.html' "></div>
+
+<div class="row" ng-controller="TimesheetCtrl">
+    <div ng-controller="CalendarController">
+        <div class="calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar"></div>
+    </div>
+</div>

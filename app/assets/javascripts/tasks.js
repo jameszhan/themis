@@ -8,7 +8,7 @@ var MINUTE_MS = 60 * 1000,
     MONTH_MS = DAY_MS * 30,
     YEAR_MS = DAY_MS * 365;
 
-angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources'])
+angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources']);
 
 function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
     $scope.ok = function(){
@@ -77,15 +77,13 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
 
 }
 
-function TaskCtrl($scope, $compile, $modal, Task, Lunar) {
+function TaskCtrl($scope, $compile, $modal, Task) {
     $scope.events = [];
 
     $scope.updateResources = function(view){
         $scope.events.length = 0; //clear the array.
         Task.query({dateStart: view.visStart.getTime() / 1000, dateEnd: view.visEnd.getTime() / 1000}).$promise.then(function(data){
             angular.forEach(data, function(e){
-                e.url = '';
-                e.title = e.name;
                 $scope.events.push(e);
             });
         });

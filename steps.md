@@ -11,4 +11,7 @@ rake db:create db:migrate
 
 rails g migration change_task_duration_column
 rake db:migrate
+
+rails g  model timesheet title:string desc:string start_time:datetime end_time:datetime
+rake db:migrate
 ~~~

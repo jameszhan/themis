@@ -4,11 +4,11 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    query = Task.where(query_params)
+    @tasks = Task.where(query_params)
     if params[:dateStart] && params[:dateEnd]
-      query = query.start_between(Time.at(params[:dateStart].to_i), Time.at(params[:dateEnd].to_i))
+      @tasks = @tasks.start_between(Time.at(params[:dateStart].to_i), Time.at(params[:dateEnd].to_i))
     end
-    @tasks = query.page(params[:page]).per(params[:per_page])
+    @tasks = @tasks.page(params[:page]).per(params[:per_page])
   end
 
   # GET /tasks/1

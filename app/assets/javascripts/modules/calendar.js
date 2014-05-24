@@ -7,8 +7,9 @@
 //= require fullcalendar/gcal
 //= require angular-ui/calendar
 //= require modules/services
+//= require modules/lunar
 
-angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services'])
+angular.module('local.calendar', ['ui.calendar', 'local.services', "local.globals"])
     .controller('CalendarController', ['$scope', '$compile', 'Modal', 'Lunar', function($scope, $compile, Modal, Lunar){
         'use strict';
         /* add and removes an event source of choice */
@@ -24,7 +25,6 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
                 sources.push(source);
             }
         };
-
 
         /* Change View */
         $scope.changeView = function(view, calendar) {

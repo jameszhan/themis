@@ -8,8 +8,7 @@ var MINUTE_MS = 60 * 1000,
     MONTH_MS = DAY_MS * 30,
     YEAR_MS = DAY_MS * 365;
 
-angular.module('tasksApp', ['ui.calendar', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker',
-    'local.calendar', 'local.resources', 'local.globals'])
+angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datepicker', 'local.calendar', 'local.resources'])
 
 function TaskModalCtrl($scope, $modalInstance, selectedTask, Task){
     $scope.ok = function(){

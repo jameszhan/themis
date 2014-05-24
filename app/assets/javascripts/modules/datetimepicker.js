@@ -114,7 +114,6 @@ angular.module('ui.bootstrap.datetimepicker', [])
             },
             replace: true,
             link: function (scope, element, attrs, ngModel) {
-
                 var directiveConfig = {};
 
                 if (attrs.datetimepickerConfig) {

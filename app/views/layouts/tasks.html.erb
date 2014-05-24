@@ -12,9 +12,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-<div class="container-fluid">
-    <%= yield %>
-</div>
 
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">MultiAuth</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <%= link_to "Calendar", '#', class: "navbar-brand" %>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><%= link_to 'Home', '#' %></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <% flash.each do |name, msg| %>
+    <div class="alert alert-<%= name == :notice ? "success" : "danger" %>">
+        <a class="close" data-dismiss="alert">×</a>
+        <%= msg %>
+    </div>
+    <% end %>
+
+    <div class="row">
+        <%= yield %>
+    </div>
+
+    <footer style="text-align:center;">
+        Copyright &copy; 2013 All Rights Reserved by James
+    </footer>
 </body>
 </html>
+
+
+

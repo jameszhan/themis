@@ -10,6 +10,7 @@
 
 angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services'])
     .controller('CalendarController', ['$scope', '$compile', 'Modal', 'Lunar', function($scope, $compile, Modal, Lunar){
+        'use strict';
         /* add and removes an event source of choice */
         $scope.addRemoveEventSource = function(sources, source) {
             var canAdd = 0;
@@ -56,7 +57,7 @@ angular.module('local.calendar', ['ui.calendar', 'ui.bootstrap', 'local.services
         /* config object */
         $scope.uiConfig = {
             calendar:{
-                height: 450,
+                height: 650,
                 editable: true,
                 ignoreTimezone: false,
                 header:{

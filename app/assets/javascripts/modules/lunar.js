@@ -4,8 +4,8 @@ angular.module('local.globals', [])
         var MINUTE_MS = 60 * 1000,
             HOUR_MS = MINUTE_MS * 60,
             DAY_MS  = HOUR_MS * 24,
-            MONTH_MS = DAY_MS * 30,
-            YEAR_MS = DAY_MS * 365,
+            //MONTH_MS = DAY_MS * 30,
+            //YEAR_MS = DAY_MS * 365,
             HE_START_YEAR = 1864, //干支计算起始年 甲子年
             HE_START_DAY = new Date(1899, 11, 22), //干支计算起始日，甲子日
             MIN_YEAR = 1900,
@@ -58,8 +58,8 @@ angular.module('local.globals', [])
             ];
 
         /**
-         * 传回农历y年的总天数
-         * @param y
+         * 传回农历year年的总天数
+         * @param year
          * @returns {number}
          */
         function lunarYearDays(year) {
@@ -76,8 +76,8 @@ angular.module('local.globals', [])
 
 
         /**
-         * 传回农历y年闰月的天数
-         * @param y
+         * 传回农历year年闰月的天数
+         * @param year
          * @returns {number}
          */
         function lunarLeapMonthDays(year) {
@@ -99,9 +99,9 @@ angular.module('local.globals', [])
         }
 
         /**
-         * 传回农历y年m月的总天數
-         * @param y
-         * @param m
+         * 传回农历year年month月的总天數
+         * @param year
+         * @param month
          * @returns {number}
          */
         function lunarMonthDays(year, month) {

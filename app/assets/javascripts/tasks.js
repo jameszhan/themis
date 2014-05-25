@@ -11,7 +11,7 @@ var MINUTE_MS = 60 * 1000,
 
 angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.calendar', 'local.resources']);
 
-function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Config, Modal){
+function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
     Modal.closable($scope, $modalInstance);
     $scope.title = "任务";
     $scope.task = selectedTask;
@@ -21,13 +21,6 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Config, Modal
         $event.stopPropagation();
         $scope.opened = true;
     };
-
-    angular.forEach(['importances', 'urgencies', 'durations'], function(configName){
-        Config.get({id: configName}).$promise.then(function(config){
-            $scope[configName] = config.data;
-        });
-    });
-
 
     $scope.doSubmit = function() {
         if (!$scope.task.id) {
@@ -47,8 +40,14 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Config, Modal
 
 }
 
-function TaskCtrl($scope, $modal, Task) {
+function TaskCtrl($scope, $modal, Task, Config) {
     $scope.events = [];
+
+    angular.forEach(['importances', 'urgencies', 'durations'], function(configName){
+        Config.get({id: configName}).$promise.then(function(config){
+            $scope[configName] = config.data;
+        });
+    });
 
     $scope.updateResources = function(view){
         $scope.events.length = 0; //clear the array.

@@ -1,3 +1,28 @@
+categories:
+  -
+    value: 1
+    name:  学习
+  -
+    value: 2
+    name:  娱乐
+  -
+    value: 3
+    name:  运动
+  -
+    value: 4
+    name:  小憩
+  -
+    value: 5
+    name:  闲逛
+  -
+    value: 6
+    name:  购物
+  -
+    value: 7
+    name:  路途
+  -
+    value: 8
+    name:  洗漱
 importances:
   -
     name: '非常重要'

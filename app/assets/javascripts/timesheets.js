@@ -4,7 +4,7 @@
 
 angular.module('timeSheetsApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.resources', 'local.calendar']);
 
-function TimesheetCtrl($scope, $modal, Timesheet) {
+function TimesheetCtrl($scope, $modal, Timesheet, Config) {
     $scope.events = [];
 
     $scope.updateResources = function(view){
@@ -67,9 +67,14 @@ function TimesheetCtrl($scope, $modal, Timesheet) {
             }
         }).opened;
     }
+
+
+    Config.get({id: 'categories'}).$promise.then(function(config){
+        $scope.categories = config.data;
+    });
 }
 
-function TimesheetModalCtrl($scope, $modalInstance, Modal, Timesheet, selectedTimesheet, Config) {
+function TimesheetModalCtrl($scope, $modalInstance, Modal, Timesheet, selectedTimesheet) {
     Modal.closable($scope, $modalInstance);
     $scope.title = '时间表';
     $scope.timesheet = selectedTimesheet;
@@ -79,11 +84,6 @@ function TimesheetModalCtrl($scope, $modalInstance, Modal, Timesheet, selectedTi
         $event.stopPropagation();
         $scope[whichKey] = true;
     };
-
-    $scope.categories = [];
-    Config.categories().$promise.then(function(data){
-        $scope.categories = data;
-    });
 
     $scope.doSubmit = function() {
         if (!$scope.timesheet.id) {

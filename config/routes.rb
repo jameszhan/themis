@@ -5,8 +5,16 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
-      resources :tasks, only: [:index, :show, :create, :update, :destroy]
-      resources :timesheets, only: [:index, :show, :create, :update, :destroy]
+      resources :tasks, only: [:index, :show, :create, :update, :destroy] do
+        collection do
+          get 'search'
+        end
+      end
+      resources :timesheets, only: [:index, :show, :create, :update, :destroy] do
+        collection do
+          get 'search'
+        end
+      end
       resources :config, only: [:show]
     end
   end

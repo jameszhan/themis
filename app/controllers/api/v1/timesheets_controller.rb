@@ -1,5 +1,6 @@
 module Api::V1
   class TimesheetsController < ApplicationController
+    include Paginatable
 
     before_action :set_timesheet, only: [:show, :update, :destroy]
 
@@ -67,6 +68,10 @@ module Api::V1
       # Never trust parameters from the scary internet, only allow the white list through.
       def timesheet_params
         params.require(:timesheet).permit(:title, :desc, :category_id, :started_at, :completed_at)
+      end
+
+      def query_params
+        params.permit(:title, :category_id)
       end
 
   end

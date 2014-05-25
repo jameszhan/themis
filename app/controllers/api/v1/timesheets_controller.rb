@@ -1,6 +1,6 @@
 module Api::V1
   class TimesheetsController < ApplicationController
-    include Paginatable
+    include Pagable
 
     before_action :set_timesheet, only: [:show, :update, :destroy]
 

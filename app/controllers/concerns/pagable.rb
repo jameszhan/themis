@@ -1,4 +1,4 @@
-module Paginatable
+module Pagable
 
   def search
     model = find_resource_model

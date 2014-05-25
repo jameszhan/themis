@@ -1,6 +1,6 @@
 module Api::V1
   class TasksController < ::TasksController
-    include Paginatable
+    include Pagable
 
     private
       def query_params

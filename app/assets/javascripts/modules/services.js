@@ -89,6 +89,9 @@ angular.module('local.services', ['ngResource', 'ui.bootstrap.modal'])
                     }
                 }
             },
+            pagable: function(scope){
+
+            },
             pagination: function(scope, targetName, pageSize){
                 scope.currentPage = 0;
                 scope.pageSize = pageSize;

@@ -2,7 +2,7 @@
 //= require modules/resources
 //= require modules/datetimepicker
 
-angular.module('timeSheetsApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.resources', 'local.calendar']);
+angular.module('timesheetsApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.resources', 'local.calendar']);
 
 function TimesheetCtrl($scope, $modal, Timesheet, Config) {
     $scope.events = [];

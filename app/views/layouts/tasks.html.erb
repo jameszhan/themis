@@ -32,21 +32,14 @@
     </div>
 </header>
 
-<div class="container">
-    <% flash.each do |name, msg| %>
-    <div class="alert alert-<%= name == :notice ? "success" : "danger" %>">
-        <a class="close" data-dismiss="alert">×</a>
-        <%= msg %>
-    </div>
-    <% end %>
+<div class="container-fluid">
+    <%= yield %>
+</div>
 
-    <div class="row">
-        <%= yield %>
-    </div>
+<footer>
+    <p>Copyright &copy; 2013 All Rights Reserved by James</p>
+</footer>
 
-    <footer style="text-align:center;">
-        Copyright &copy; 2013 All Rights Reserved by James
-    </footer>
 </body>
 </html>
 

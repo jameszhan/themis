@@ -96,7 +96,7 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="timesheet.started_at" data-datetimepicker-config="{ minView: 'hour', dropdownSelector: '#startTimeToggle' }" />
+                            <datetimepicker data-ng-model="timesheet.started_at" data-datetimepicker-config="{ startView:'hour', minView: 'hour', dropdownSelector: '#startTimeToggle' }" />
                         </ul>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="timesheet.completed_at" data-datetimepicker-config="{ minView: 'hour', dropdownSelector: '#endTimeToggle' }" />
+                            <datetimepicker data-ng-model="timesheet.completed_at" data-datetimepicker-config="{ startView:'hour', minView: 'hour', dropdownSelector: '#endTimeToggle' }" />
                         </ul>
                     </div>
                 </div>

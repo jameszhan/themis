@@ -11,7 +11,7 @@ var MINUTE_MS = 60 * 1000,
 
 angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.calendar', 'local.resources']);
 
-function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
+function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Config, Modal){
     Modal.closable($scope, $modalInstance);
     $scope.title = "任务";
     $scope.task = selectedTask;
@@ -22,32 +22,12 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
         $scope.opened = true;
     };
 
-    $scope.format = 'yyyy-MM-dd';
+    angular.forEach(['importances', 'urgencies', 'durations'], function(configName){
+        Config.get({id: configName}).$promise.then(function(config){
+            $scope[configName] = config.data;
+        });
+    });
 
-    $scope.importances = [
-        {name: '非常重要', value: 100},
-        {name: '重要', value: 80},
-        {name: '一般', value: 50},
-        {name: '不重要', value: 20},
-        {name: '非常不重要', value: 0},
-        {name: '浪费生命', value: -100}];
-    $scope.urgencies = [
-        {name: '非常紧急', value: 100},
-        {name: '紧急', value: 80},
-        {name: '一般', value: 50},
-        {name: '不紧急', value: 20},
-        {name: '非常不紧急', value: 0}];
-
-    $scope.durations = [{name: '不限时间', value: 0}, {name: '1分钟', value: MINUTE_MS}, {name: '5分钟', value: 5 * MINUTE_MS},
-        {name: '10分钟', value: 10 * MINUTE_MS}, {name: '30分钟', value: 30 * MINUTE_MS}, {name: '1小时', value: HOUR_MS},
-        {name: '2小时', value: 2 * HOUR_MS}, {name: '3小时', value: 3 * HOUR_MS}, {name: '5小时', value: 5 * HOUR_MS},
-        {name: '6小时', value: 6 * HOUR_MS}, {name: '8小时', value: 8 * HOUR_MS}, {name: '9小时', value: 9 * HOUR_MS},
-        {name: '10小时', value: 10 * HOUR_MS}, {name: '12小时', value: 12 * HOUR_MS}, {name: '1天', value: DAY_MS},
-        {name: '3天', value: 3 * DAY_MS}, {name: '10天', value: 10 * DAY_MS}, {name: '1个月', value: MONTH_MS},
-        {name: '3个月', value: 3 * MONTH_MS}, {name: '6个月', value: 6 * MONTH_MS}, {name: '9个月', value: 9 * MONTH_MS},
-        {name: '1年', value: YEAR_MS}, {name: '2年', value: 2 * YEAR_MS}, {name: '3年', value: 3 * YEAR_MS},
-        {name: '5年', value: 5 * YEAR_MS}, {name: '8年', value: 8 * YEAR_MS}, {name: '10年', value: 10 * YEAR_MS},
-        {name: '20年', value: 20 * YEAR_MS}, {name: '30年', value: 30 * YEAR_MS}, {name: '50年', value: 50 * YEAR_MS}];
 
     $scope.doSubmit = function() {
         if (!$scope.task.id) {

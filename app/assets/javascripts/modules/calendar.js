@@ -4,7 +4,7 @@
 //= require jquery-ui/jquery.ui.draggable
 //= require jquery-ui/jquery.ui.resizable
 //= require fullcalendar/fullcalendar
-//= require fullcalendar/gcal
+// require fullcalendar/gcal
 //= require angular-ui/calendar
 //= require modules/services
 //= require modules/lunar

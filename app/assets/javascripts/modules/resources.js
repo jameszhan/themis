@@ -3,8 +3,8 @@ angular.module('local.resources', ['ngResource', 'ui.bootstrap.modal'])
         $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = $("meta[name='csrf-token']").attr("content");
     }])
     .factory('Config', function($resource){
-        var prefix = 'api/v1/config';
-        return $resource(prefix, {}, {
+        var prefix = 'api/v1/config/:id';
+        return $resource(prefix, {id: '@id'}, {
             categories: {method: 'GET', url: prefix + '/categories', isArray: true}
         });
     })

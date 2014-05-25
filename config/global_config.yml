@@ -1,0 +1,127 @@
+importances:
+  -
+    name: '非常重要'
+    value: 100
+  -
+    name: '重要'
+    value: 80
+  -
+    name: '一般'
+    value: 50
+  -
+    name: '不重要'
+    value: 20
+  -
+    name: '非常不重要'
+    value: 0
+  -
+    name: '浪费生命'
+    value: -100
+
+urgencies:
+  -
+    name: '非常紧急'
+    value: 100
+  -
+    name: '紧急'
+    value: 80
+  -
+    name: '一般'
+    value: 50
+  -
+    name: '不紧急'
+    value: 20
+  -
+    name: '非常不紧急'
+    value: 0
+durations:
+  -
+    name: '不限时间'
+    value: 0
+  -
+    name: '1分钟'
+    value: 60000
+  -
+    name: '5分钟'
+    value: 300000
+  -
+    name: '10分钟'
+    value: 600000
+  -
+    name: '30分钟'
+    value: 1800000
+  -
+    name: '1小时'
+    value: 3600000
+  -
+    name: '2小时'
+    value: 7200000
+  -
+    name: '3小时'
+    value: 10800000
+  -
+    name: '5小时'
+    value: 18000000
+  -
+    name: '6小时'
+    value: 21600000
+  -
+    name: '8小时'
+    value: 28800000
+  -
+    name: '9小时'
+    value: 32400000
+  -
+    name: '10小时'
+    value: 36000000
+  -
+    name: '12小时'
+    value: 43200000
+  -
+    name: '1天'
+    value: 86400000
+  -
+    name: '3天'
+    value: 259200000
+  -
+    name: '10天'
+    value: 864000000
+  -
+    name: '1个月'
+    value: 2592000000
+  -
+    name: '3个月'
+    value: 7776000000
+  -
+    name: '6个月'
+    value: 15552000000
+  -
+    name: '9个月'
+    value: 23328000000
+  -
+    name: '1年'
+    value: 31536000000
+  -
+    name: '2年'
+    value: 63072000000
+  -
+    name: '3年'
+    value: 94608000000
+  -
+    name: '5年'
+    value: 157680000000
+  -
+    name: '8年'
+    value: 252288000000
+  -
+    name: '10年'
+    value: 315360000000
+  -
+    name: '20年'
+    value: 630720000000
+  -
+    name: '30年'
+    value: 946080000000
+  -
+    name: '50年'
+    value: 1576800000000

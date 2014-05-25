@@ -1,8 +1,69 @@
 <div ng-include=" 'templates/modal.html' "></div>
+<tabset justified="false">
+    <tab heading="Calendar">
+        <div class="row calendar-container" ng-controller="TimesheetCtrl">
+            <div ng-controller="CalendarController">
+                <div class="calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar"></div>
+            </div>
+        </div>
+    </tab>
+    <tab heading="Table">
+        <div class="table-list" ng-controller="TimesheetTableCtrl">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="input-prepend input-append">
+                        <button type="button" class="btn btn-xs" ng-click="doAdd()">添加</button>
+                        <button type="button" class="btn btn-xs" ng-click="doEdit()">修改</button>
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="doRemove()">删除</button>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <span>每页显示</span>
+                    <select class="input-xs" ng-model="pageSize">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="20">30</option>
+                        <option value="20">50</option>
+                        <option value="20">100</option>
+                    </select>
+                    <span>条</span>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" ng-model="selectedAll" /></th>
+                    <th>名称</th>
+                    <th>类别</th>
+                    <th>描述</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="timesheet in timesheets | startFrom:(currentPage * pageSize) | limitTo:pageSize">
+                    <td><input type="checkbox" value="{{timesheet.id}}" ng-model="selected[timesheet.id]" /></td>
+                    <td>{{timesheet.title}}</td>
+                    <td>{{timesheet.category_id}}</td>
+                    <td>{{timesheet.desc}}</td>
+                    <td>{{timesheet.started_at}}</td>
+                    <td>{{timesheet.completed_at}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="pagination pull-right">
+                <li ng-hide="shouldHide()" ng-class="prevClass" ng-click="prev()"><a href="javascript:void(0);">&laquo;</a></li>
+                <li ng-repeat="i in [] | range:pageCount()" ng-hide="shouldHide()" ng-click="page(i)" ng-class="(i == currentPage) && 'active'">
+                    <a href="javascript:void(0)">{{i + 1}}</a>
+                </li>
+                <li ng-hide="shouldHide()" ng-class="nextClass" ng-click="next()"><a href="javascript:void(0);">&raquo;</a></li>
+            </ul>
+        </div>
+    </tab>
+</tabset>
 
-<div class="row calendar-container" ng-controller="TimesheetCtrl">
-    <div ng-controller="CalendarController">
-        <div class="calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar"></div>
-    </div>
-</div>
+
+
+
 

@@ -22,3 +22,11 @@
 //= require angular-ui/ui-bootstrap-tpls
 // require_tree .
 
+String.format = function(formatter){
+    var _args = [].slice.apply(arguments, [1]);
+    return formatter.replace(/\{(\d+)\}/g, function(match, g1, position, str){
+        return (_args[g1] || match);
+    });
+};
+
+

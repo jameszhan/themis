@@ -9,7 +9,10 @@ angular.module('local.resources', ['ngResource', 'ui.bootstrap.modal'])
         });
     })
     .factory('Task', function($resource) {
-        return $resource('api/v1/tasks/:id', {id: '@id'}, {update: {method: 'PATCH'}});
+        return $resource('api/v1/tasks/:id', {id: '@id'}, {
+            update: {method: 'PATCH'},
+            search: {method: 'GET', url: 'api/v1/tasks/search'}
+        });
     })
     .factory('Timesheet', function($resource) {
         return $resource('api/v1/timesheets/:id', {id: '@id'}, {update: {method: 'PATCH'}});

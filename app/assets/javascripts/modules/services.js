@@ -89,8 +89,67 @@ angular.module('local.services', ['ngResource', 'ui.bootstrap.modal'])
                     }
                 }
             },
-            pagable: function(scope){
+            pagable: function(scope, targetName, search){
+                scope.$watch('currentPage', function(current, _old){
+                    if (current <= 1) {
+                        scope.prevClass = 'disabled';
+                    } else {
+                        scope.prevClass = '';
+                    }
+                    if (current >= scope.pageCount){
+                        scope.nextClass = 'disabled';
+                    } else {
+                        scope.nextClass = '';
+                    }
+                });
+                scope.prev = function(){
+                    if (scope.prevClass != 'disabled') {
+                        doSearch(scope.currentPage - 1);
+                    }
+                };
 
+                scope.page = function(i){
+                    if (scope.currentPage != i) {
+                        doSearch(i);
+                    }
+                };
+
+                scope.next = function(){
+                    if (scope.nextClass != 'disabled') {
+                        doSearch(scope.currentPage + 1);
+                    }
+                };
+
+                scope.pageSizeChange = function(){
+                    doSearch(scope.currentPage);
+                };
+
+                scope.shouldHide = function(){
+                    return scope.totalCount <= scope.pageSize;
+                };
+
+                scope.unselectedAll = function(){
+                    scope.selectedAll = false;
+                };
+
+                scope.$watch('selectedAll', function(newValue, _oldValue){
+                    if(newValue != undefined){
+                        scope[targetName].filter(function(target, i){
+                            scope.selected[target.id] = newValue;
+                        });
+                    }
+                });
+
+                function doSearch(i){
+                    search(i).then(function(data){
+                        scope[targetName] = data.items;
+                        scope.totalCount = +data.total_count;
+                        scope.pageSize = +data.page_size;
+                        scope.pageCount = +data.page_count;
+                        scope.currentPage = +data.page_index;
+                    });
+                }
+                doSearch(1);
             },
             pagination: function(scope, targetName, pageSize){
                 scope.currentPage = 0;

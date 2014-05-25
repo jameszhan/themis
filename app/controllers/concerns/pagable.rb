@@ -5,6 +5,7 @@ module Pagable
     @total_count = model.count
     @page_index = params[:page] || 1
     @page_size =  params[:per_page] || Kaminari.config.default_per_page
+    @page_count = (@total_count * 1.0 / @page_size.to_i).ceil
     @items = model.where(query_params).page(params[:page]).per(params[:per_page])
     render 'shared/_paginate'
   end

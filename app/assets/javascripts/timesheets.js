@@ -34,11 +34,11 @@ function TimesheetCtrl($scope, $modal, Timesheet, Config) {
     };
 
     $scope.dayClick = function(date, allDay, $event, view){
-        openTaskModal(null, date).then(function(r){});
+        openTimesheetModal(null, date).then(function(r){});
     };
 
     $scope.eventOnClick = function(event, $event, view){
-        openTaskModal(event, null).then(function(r){});
+        openTimesheetModal(event, null).then(function(r){});
     };
 
     $scope.eventOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, $event, ui, view){
@@ -52,7 +52,7 @@ function TimesheetCtrl($scope, $modal, Timesheet, Config) {
         console.log(arguments);
     };
 
-    function openTaskModal(timesheet, date){
+    function openTimesheetModal(timesheet, date){
         return $modal.open({
             templateUrl: 'templates/modal/timesheet.tpl',
             size: 'md', //'sm', 'lg'
@@ -91,12 +91,12 @@ function TimesheetTableCtrl($scope, $modal, Timesheet, Binder) {
     $scope.maxMsg = "你不能选择超过{0}个任务.";
 
     $scope.doAdd = function(){
-        return openTaskModal(null, new Date()).then(function(r){});
+        return openTimesheetModal(null, new Date()).then(function(r){});
     };
 
     $scope.doEdit = function() {
         Binder.bind($scope, 'timesheets').select(1, 1).then(function(timesheets) {
-            return openTaskModal(timesheets[0], null).then(function(r){});
+            return openTimesheetModal(timesheets[0], null).then(function(r){});
         });
     };
 
@@ -112,7 +112,7 @@ function TimesheetTableCtrl($scope, $modal, Timesheet, Binder) {
     };
 
 
-    function openTaskModal(timesheet, date){
+    function openTimesheetModal(timesheet, date){
         return $modal.open({
             templateUrl: 'templates/modal/timesheet.tpl',
             size: 'md', //'sm', 'lg'

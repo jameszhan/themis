@@ -1,10 +1,11 @@
 //= require modules/calendar
 //= require modules/resources
 //= require modules/datetimepicker
+//= require modules/filters
 
-angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.calendar', 'local.resources']);
+angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.filters', 'local.calendar', 'local.resources']);
 
-function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
+function TaskModalCtrl($scope, $modalInstance, selectedTask, container, Task, Modal){
     Modal.closable($scope, $modalInstance);
     $scope.title = "任务";
     $scope.task = selectedTask;
@@ -19,7 +20,7 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
         if (!$scope.task.id) {
             $scope.task.$save()
                 .then(function(e) {
-                    $scope.events.push(e);
+                    container.push(e);
                 })
                 .finally(function() {
                     $modalInstance.dismiss('close');
@@ -30,7 +31,6 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, Task, Modal){
             });
         }
     }
-
 }
 
 function TaskCtrl($scope, $modal, Task, Config) {
@@ -95,8 +95,73 @@ function TaskCtrl($scope, $modal, Task, Config) {
                         return new Task({duration: 0, importance: 0, urgency: 0, start: date});
                     }
                     return task;
+                },
+                container: function(){
+                    return $scope.events;
                 }
             }
         }).opened;
     }
+
+}
+
+
+function TaskTableCtrl($scope, $modal, Task, Config, Binder) {
+    $scope.pageSize = 5;
+    Binder.pagable($scope, 'tasks', function(i){
+        return Task.search({page: i, per_page: $scope.pageSize}).$promise;
+    });
+
+    $scope.tasks = [];
+    $scope.selected || ($scope.selected = {});
+
+    $scope.minMsg = "你至少应该选择{0}个任务.";
+    $scope.maxMsg = "你不能选择超过{0}个任务.";
+
+    $scope.doAdd = function(){
+        return openTaskModal(null, new Date()).then(function(r){});
+    };
+
+    $scope.doEdit = function() {
+        Binder.bind($scope, 'tasks').select(1, 1).then(function(tasks) {
+            return openTaskModal(tasks[0], null).then(function(r){});
+        });
+    };
+
+    $scope.doRemove = function(){
+        Binder.bind($scope, 'tasks').select(1, 10).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(tasks){
+            angular.forEach(tasks, function(task){
+                new Task({id: task.id}).$delete().then(function(data){
+                    var index = $scope.tasks.indexOf(task);
+                    $scope.tasks.splice(index, 1);
+                });
+            });
+        });
+    };
+
+    function openTaskModal(task, date){
+        return $modal.open({
+            templateUrl: 'templates/modal/task.tpl',
+            size: 'md', //'sm', 'lg'
+            controller: 'TaskModalCtrl',
+            scope: $scope,
+            resolve: {
+                selectedTask: function(){
+                    if (!task) {
+                        return new Task({duration: 0, importance: 0, urgency: 0, start: date});
+                    }
+                    return task;
+                },
+                container: function(){
+                    return $scope.tasks;
+                }
+            }
+        }).opened;
+    }
+
+    angular.forEach(['importances', 'urgencies', 'durations'], function(configName){
+        Config.get({id: configName}).$promise.then(function(config){
+            $scope[configName] = config.data;
+        });
+    });
 }

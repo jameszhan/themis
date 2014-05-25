@@ -1,7 +1,7 @@
 ~~~shell
-rails new iSharing -m ./rails_templates/rails41.rb -d mysql
+rails new themis -m ./rails_templates/rails41.rb -d mysql
 
-cd iSharing
+cd themis
 
 rails g scaffold task name:string desc:string importance:integer urgency:integer start:datetime duration:integer
 

@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: themis_production
+  database: themis
   username: themis
   password: <%= ENV['THEMIS_DATABASE_PASSWORD'] %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524192612) do
+ActiveRecord::Schema.define(version: 20140527164655) do
 
   create_table "tasks", force: true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20140524192612) do
     t.integer  "duration",   limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "progress"
   end
 
   create_table "timesheets", force: true do |t|

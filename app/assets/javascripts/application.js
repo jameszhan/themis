@@ -29,4 +29,19 @@ String.format = function(formatter){
     });
 };
 
+jQuery(document).ready(function($){
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")}
+    });
+
+    $(document)
+        .on("click", "a[data-post-url][data-target]", function(e){
+            var _self = $(this);
+            $.post(_self.data('post-url'), {content: _self.data('post-body')})
+                .done(function(data){
+                    $(_self.data('target')).find('.modal-content').html(data);
+                });
+        });
+});
+
 

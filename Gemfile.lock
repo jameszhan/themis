@@ -136,6 +136,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    redcarpet (3.1.2)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -200,6 +201,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   capybara
+  coderay
   coffee-rails (~> 4.0.0)
   database_cleaner
   factory_girl_rails
@@ -214,6 +216,7 @@ DEPENDENCIES
   pry
   rails (= 4.1.1)
   rb-fsevent
+  redcarpet
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

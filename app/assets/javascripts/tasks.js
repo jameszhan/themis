@@ -36,7 +36,7 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, container, Task, Mo
 function TaskCtrl($scope, $modal, Task, Config) {
     $scope.events = [];
 
-    angular.forEach(['importances', 'urgencies', 'durations'], function(configName){
+    angular.forEach(['importances', 'urgencies', 'durations', 'progresses'], function(configName){
         Config.get({id: configName}).$promise.then(function(config){
             $scope[configName] = config.data;
         });
@@ -159,7 +159,7 @@ function TaskTableCtrl($scope, $modal, Task, Config, Binder) {
         }).opened;
     }
 
-    angular.forEach(['importances', 'urgencies', 'durations'], function(configName){
+    angular.forEach(['importances', 'urgencies', 'durations', 'progresses'], function(configName){
         Config.get({id: configName}).$promise.then(function(config){
             $scope[configName] = config.data;
         });

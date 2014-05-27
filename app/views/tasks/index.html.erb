@@ -39,6 +39,7 @@
                     <th>描述</th>
                     <th>开始时间</th>
                     <th>持续时间(秒)</th>
+                    <th>进度</th>
                     <th>重要性</th>
                     <th>紧急性</th>
                 </tr>
@@ -50,8 +51,27 @@
                     <td>{{task.desc}}</td>
                     <td>{{task.start}}</td>
                     <td>{{task.duration}}</td>
-                    <td>{{task.importance}}</td>
-                    <td>{{task.urgency}}</td>
+                    <td>
+                        <div class="progress">
+                        <div style="width: {{task.progress}}%" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{task.progress}}" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">{{task.progress}}</span>
+                        </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div style="width: {{task.importance}}%" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{task.importance}}" aria-valuemin="0" aria-valuemax="100">
+                                <span class="sr-only">{{task.importance}}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div style="width: {{task.urgency}}%" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{task.urgency}}" aria-valuemin="0" aria-valuemax="100">
+                                <span class="sr-only">{{task.urgency}}</span>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -13,6 +13,16 @@ angular.module('local.services', ['ngResource', 'ui.bootstrap.modal'])
             $modalInstance.close(result);
         };
     }])
+    .factory('Util', function(){
+        return {
+            preview: function(content){
+                $.post('/markdown', {content: content})
+                    .done(function(data){
+                        $('#globalModal').modal('show').find('.modal-content').html(data);
+                    });
+            }
+        }
+    })
     .factory('Modal', function($modal){
         var messageBox = function(title, msg, btns, succ, fail){
             return $modal.open({

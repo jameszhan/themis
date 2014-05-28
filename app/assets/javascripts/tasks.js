@@ -33,7 +33,7 @@ function TaskModalCtrl($scope, $modalInstance, selectedTask, container, Task, Mo
     }
 }
 
-function TaskCtrl($scope, $modal, Task, Config) {
+function TaskCtrl($scope, $modal, Task, Config, Util) {
     $scope.events = [];
 
     angular.forEach(['importances', 'urgencies', 'durations', 'progresses'], function(configName){
@@ -79,10 +79,7 @@ function TaskCtrl($scope, $modal, Task, Config) {
     };
 
     $scope.eventOnClick = function(event, $event, view){
-        $.post('/markdown', {content: event.desc})
-            .done(function(data){
-                $('#globalModal').modal('show').find('.modal-content').html(data);
-            });
+        Util.preview(event.desc);
     };
 
 

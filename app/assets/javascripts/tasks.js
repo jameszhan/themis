@@ -52,28 +52,39 @@ function TaskCtrl($scope, $modal, Task, Config) {
     };
 
     /* remove event */
-    $scope.remove = function(id) {
-        var index = -1, event = null;
+    $scope.remove = function(e) {
+        var index = -1;
         for(var i = 0; i < $scope.events.length; i++) {
-            if (id == $scope.events[i].id) {
+            if (e == $scope.events[i]) {
                 index = i;
-                event = $scope.events[i];
                 break;
             }
         }
-        if (index >= 0 && event) {
-            event.$delete();
+        if (index >= 0 && e) {
+            e.$delete();
             $scope.events.splice(index, 1);
         }
+    };
+
+    $scope.edit = function(event){
+        openTaskModal(event, null).then(function(r){});
     };
 
     $scope.dayClick = function(date, allDay, $event, view){
         openTaskModal(null, date).then(function(r){});
     };
 
-    $scope.eventOnClick = function(event, $event, view){
-        openTaskModal(event, null).then(function(r){});
+    $scope.renderEvent = function(event, el, view){
+        //console.log(event, el, view);
     };
+
+    $scope.eventOnClick = function(event, $event, view){
+        $.post('/markdown', {content: event.desc})
+            .done(function(data){
+                $('#globalModal').modal('show').find('.modal-content').html(data);
+            });
+    };
+
 
     $scope.eventOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, $event, ui, view){
         Task.update({id: event.id}, event);

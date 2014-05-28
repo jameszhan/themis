@@ -18,28 +18,34 @@ function TimesheetCtrl($scope, $modal, Timesheet, Config) {
     };
 
     /* remove event */
-    $scope.remove = function(id) {
-        var index = -1, event = null;
+    $scope.remove = function(e) {
+        var index = -1;
         for(var i = 0; i < $scope.events.length; i++) {
-            if (id == $scope.events[i].id) {
+            if (e == $scope.events[i]) {
                 index = i;
-                event = $scope.events[i];
                 break;
             }
         }
-        if (index >= 0 && event) {
-            event.$delete();
+        if (index >= 0 && e) {
+            e.$delete();
             $scope.events.splice(index, 1);
         }
     };
+
+    $scope.edit = function(event){
+        openTimesheetModal(event, null).then(function(r){});
+    };
+
 
     $scope.dayClick = function(date, allDay, $event, view){
         openTimesheetModal(null, date).then(function(r){});
     };
 
+    /*
     $scope.eventOnClick = function(event, $event, view){
         openTimesheetModal(event, null).then(function(r){});
     };
+    */
 
     $scope.eventOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, $event, ui, view){
         event.completed_at = event.start;

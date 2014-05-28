@@ -37,19 +37,21 @@ angular.module('local.calendar', ['ui.calendar', 'local.services', "local.global
             }
         };
 
-        $scope.eventRender = function(event, el, view) {
-            el.attr('tooltip', event.desc);
-            el.addClass("event-urgency-" + event.urgency)
-                .addClass("event-importance-" + event.urgency)
-                .find('span.fc-event-title')
+        $scope.eventRender = function (event, el, view) {
+            el.find('span.fc-event-title')
                 .append('<span class="pull-right"><i class="glyphicon glyphicon-pencil"></i><i class="glyphicon glyphicon-trash"><i></span>');
-            el.on('click', '.glyphicon-trash', function(e){
-                Modal.confirm("你真的确定要删除这个事件吗?", function(){
-                    $scope.remove(event.id);
+            el.attr('data-toggle', 'tooltip').attr('title', event.desc)
+                .on('click', '.glyphicon-trash', function (e) {
+                    Modal.confirm("你真的确定要删除这个事件吗?", function(e) {
+                        ($scope.remove || angular.noop)(event);
+                    });
+                    e.stopPropagation();
+                })
+                .on('click', '.glyphicon-pencil', function(e) {
+                    ($scope.edit || angular.noop)(event);
+                    e.stopPropagation();
                 });
-                e.stopPropagation();
-            });
-
+            ($scope.renderEvent || angular.noop)(event, el, view);
             $compile(el)($scope);
         };
 

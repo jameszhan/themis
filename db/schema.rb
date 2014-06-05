@@ -11,17 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524192612) do
+ActiveRecord::Schema.define(version: 20140603151214) do
 
   create_table "tasks", force: true do |t|
     t.string   "name"
-    t.string   "desc"
+    t.text     "desc"
     t.integer  "importance"
     t.integer  "urgency"
     t.datetime "start"
     t.integer  "duration",   limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "progress",             default: 0
   end
 
   create_table "timesheets", force: true do |t|

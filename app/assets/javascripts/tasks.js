@@ -1,9 +1,10 @@
 //= require modules/calendar
 //= require modules/resources
 //= require modules/datetimepicker
+//= require modules/directives
 //= require modules/filters
 
-angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.filters', 'local.calendar', 'local.resources']);
+angular.module('tasksApp', ['ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.datetimepicker', 'local.directives', 'local.filters', 'local.calendar', 'local.resources']);
 
 function TaskModalCtrl($scope, $modalInstance, selectedTask, container, Task, Modal){
     Modal.closable($scope, $modalInstance);
@@ -67,6 +68,7 @@ function TaskCtrl($scope, $modal, Task, Config, Util) {
     };
 
     $scope.edit = function(event){
+        console.log(event);
         openTaskModal(event, null).then(function(r){});
     };
 
@@ -88,7 +90,7 @@ function TaskCtrl($scope, $modal, Task, Config, Util) {
     };
 
     $scope.eventOnResize = function(){
-        console.log(arguments);
+        //console.log(arguments);
     };
 
     function openTaskModal(task, date){
@@ -100,7 +102,7 @@ function TaskCtrl($scope, $modal, Task, Config, Util) {
             resolve: {
                 selectedTask: function(){
                     if (!task) {
-                        return new Task({duration: 0, importance: 0, urgency: 0, start: date});
+                        return new Task({duration: 0, importance: 0, urgency: 0, progress: 0, start: date});
                     }
                     return task;
                 },
@@ -156,7 +158,7 @@ function TaskTableCtrl($scope, $modal, Task, Config, Binder) {
             resolve: {
                 selectedTask: function(){
                     if (!task) {
-                        return new Task({duration: 0, importance: 0, urgency: 0, start: date});
+                        return new Task({duration: 0, importance: 0, urgency: 0, progress: 20, start: date});
                     }
                     return task;
                 },

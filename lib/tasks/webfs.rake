@@ -1,5 +1,15 @@
 require 'find'
 
+def logger
+  @logger ||= Logger.new(STDOUT).tap{|logger|
+    logger.formatter = proc { |severity, datetime, progname, msg|
+      "#{progname} #{datetime} #{severity}: #{msg}\n"
+    }
+    logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+    logger.level = Logger::INFO
+  }
+end
+
 namespace :webfs do
   task :load => :environment do
     dirs = YAML.load_file(File.expand_path('config/webfs.yml', Rails.root))
@@ -10,7 +20,7 @@ namespace :webfs do
           s = File.stat(path)
           ext = File.extname(path)
           basename = File.basename(path, ext)
-          blob = Blob.where(uri: path)
+          blob = Blob.where(uri: path).first
           unless blob
             logger.info "load file #{path}"
             Blob.create(
@@ -43,7 +53,7 @@ namespace :webfs do
 
   task :cleanup => :environment do
     Blob.all.each do|blob|
-      if File.exist? blob.uri
+      unless File.exist? blob.uri
         logger.info "remove: #{blob.uri}"
         blob.delete
       end

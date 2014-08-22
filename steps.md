@@ -18,3 +18,10 @@ rake db:migrate
 rails g scaffold blob digest uri size:integer mime name modified_at:datetime
 rake db:migrate
 ~~~
+
+#load webfs
+~~~sh
+rake webfs:load
+bundle exec sidekiq
+rake webfs:digest
+~~~

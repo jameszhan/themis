@@ -18,7 +18,8 @@ class DigestWorker
   end
 
   def digest(uri)
-    sha = Digest::SHA1.new
+    #sha = Digest::SHA1.new
+    sha = Digest::SHA256.new
     open(uri, 'rb') do|io|
       while buf = io.read(BUF_SIZE)
         sha.update(buf)

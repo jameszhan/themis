@@ -46,6 +46,7 @@ gem 'coderay'
 gem 'kaminari'
 
 gem 'sidekiq'
+gem 'sinatra', require: nil
 
 gem 'mulberry_preview',  path: '../mulberry_preview'
 

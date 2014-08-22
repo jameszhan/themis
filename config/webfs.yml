@@ -1,2 +1,2 @@
-verbose: true
-concurrency: 1
+- /opt/datum
+- /opt/cloud

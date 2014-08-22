@@ -1,5 +1,13 @@
 require 'find'
 
+def fallback_mime(fallback)
+  if ['epub', 'mobi'].include?(fallback)
+    "application/#{fallback}"
+  else
+    "unknown/#{fallback}"
+  end
+end
+
 namespace :webfs do
   task :load => :environment do
     dirs = YAML.load_file(File.expand_path('config/webfs.yml', Rails.root))
@@ -12,7 +20,7 @@ namespace :webfs do
           basename = File.basename(path, ext)
           Blob.create(
               name: basename,
-              mime: Mime.fetch(ext[/\w+/]){|fallback| "unknown/#{fallback}" }.to_s,
+              mime: Mime.fetch(ext[/\w+/]){|fallback| fallback_mime(fallback) }.to_s,
               uri: path,
               size: s.size,
               created_at: s.ctime,

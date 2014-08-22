@@ -1,3 +1,9 @@
+PATH
+  remote: ../mulberry_preview
+  specs:
+    mulberry_preview (0.0.1)
+      rails (~> 4.1.0)
+
 GEM
   remote: https://ruby.taobao.org/
   specs:
@@ -227,6 +233,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   launchy
+  mulberry_preview!
   mysql2
   pry
   rails (= 4.1.5)

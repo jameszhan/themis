@@ -47,6 +47,8 @@ gem 'kaminari'
 
 gem 'sidekiq'
 
+gem 'mulberry_preview',  path: '../mulberry_preview'
+
 gem 'simple_form'
 gem 'angularjs-rails'
 group :development do

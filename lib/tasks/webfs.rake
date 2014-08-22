@@ -16,7 +16,7 @@ namespace :webfs do
     dirs.each do|dir|
       Find.find(dir) do|path|
         ext = File.extname(path)
-        if !File.directory?(path) || %w{pages numbers key app}.include?(ext)
+        if File.file?(path) || %w{pages numbers key app}.include?(ext)
           #dir, base = File.split(path)
           s = File.stat(path)
           basename = File.basename(path, ext)

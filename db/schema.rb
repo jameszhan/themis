@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20140822072302) do
     t.datetime "updated_at"
   end
 
+  add_index "blobs", ["uri"], name: "index_blobs_on_uri", unique: true, using: :btree
+
   create_table "tasks", force: true do |t|
     t.string   "name"
     t.text     "desc"

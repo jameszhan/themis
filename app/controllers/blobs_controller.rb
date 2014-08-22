@@ -4,7 +4,7 @@ class BlobsController < ApplicationController
   # GET /blobs
   # GET /blobs.json
   def index
-    @blobs = Blob.all
+    @blobs = Blob.page params[:page]
   end
 
   # GET /blobs/1

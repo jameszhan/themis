@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603151214) do
+ActiveRecord::Schema.define(version: 20140822072302) do
+
+  create_table "blobs", force: true do |t|
+    t.string   "digest"
+    t.string   "uri"
+    t.integer  "size",        limit: 8
+    t.string   "mime"
+    t.string   "name"
+    t.datetime "modified_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tasks", force: true do |t|
     t.string   "name"

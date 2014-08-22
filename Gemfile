@@ -45,6 +45,8 @@ gem 'coderay'
 
 gem 'kaminari'
 
+gem 'sidekiq'
+
 gem 'simple_form'
 gem 'angularjs-rails'
 group :development do

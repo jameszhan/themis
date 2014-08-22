@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Digest:</strong>
+  <%= @blob.digest %>
+</p>
+
+<p>
+  <strong>Uri:</strong>
+  <%= @blob.uri %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @blob.size %>
+</p>
+
+<p>
+  <strong>Mime:</strong>
+  <%= @blob.mime %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @blob.name %>
+</p>
+
+<p>
+  <strong>Modified at:</strong>
+  <%= @blob.modified_at %>
+</p>
+
+<%= link_to 'Edit', edit_blob_path(@blob) %> |
+<%= link_to 'Back', blobs_path %>

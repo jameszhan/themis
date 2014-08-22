@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :blobs
+
   resources :tasks
 
   get 'timesheets' => 'timesheets#index'

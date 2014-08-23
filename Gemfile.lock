@@ -1,7 +1,7 @@
 PATH
   remote: ../mulberry_preview
   specs:
-    mulberry_preview (0.0.3)
+    mulberry_preview (0.0.5)
       rails (~> 4.1, >= 4.1.0)
 
 GEM

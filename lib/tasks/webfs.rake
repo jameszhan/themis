@@ -81,6 +81,29 @@ namespace :webfs do
     end
   end
 
+  ###
+  # SELECT a.id, a.digest, a.uri, a.name, a.mime, a.extension, a.modified_at, b.cnt
+  # FROM themis.blobs a
+  # INNER JOIN (
+  #   SELECT digest, COUNT(*) AS cnt
+  #   FROM themis.blobs
+  #   GROUP BY digest
+  #   HAVING COUNT(*) > 1
+  # ) b ON a.digest = b.digest
+  # ORDER BY a.digest
+  ###
+  task :dups => :environment do
+    sql =<<-SQL
+      INNER JOIN (
+        SELECT digest, COUNT(*) AS cnt
+        FROM blobs
+        GROUP BY digest
+        HAVING COUNT(*) > 1
+      ) b ON b.digest = blobs.digest
+    SQL
+    Blob.joins(sql).order('blobs.digest').each{|blob| logger.info "#{blob.digest} #{blob.name}"}
+  end
+
   task :digest => :environment do
     Blob.where(digest: nil).each do|blob|
       DigestWorker.perform_async(blob.id) if DigestWorker.accept?(blob)

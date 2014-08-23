@@ -15,7 +15,7 @@ rake db:migrate
 rails g  model timesheet title:string category:belongs_to desc:string started_at:datetime completed_at:datetime
 rake db:migrate
 
-rails g scaffold blob digest uri size:integer mime name modified_at:datetime
+rails g scaffold blob digest uri size:integer mime extension name modified_at:datetime
 rake db:migrate
 ~~~
 

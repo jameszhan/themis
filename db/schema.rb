@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20140822072302) do
     t.string   "uri",                   null: false
     t.integer  "size",        limit: 8, null: false
     t.string   "mime"
+    t.string   "extension"
     t.string   "name",                  null: false
     t.datetime "modified_at"
     t.datetime "created_at"

@@ -5,6 +5,7 @@ class CreateBlobs < ActiveRecord::Migration
       t.string :uri, limit: 255, null: false
       t.integer :size, limit: 8, null: false
       t.string :mime
+      t.string :extension
       t.string :name, null: false
       t.datetime :modified_at
 

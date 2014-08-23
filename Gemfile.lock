@@ -1,8 +1,8 @@
 PATH
   remote: ../mulberry_preview
   specs:
-    mulberry_preview (0.0.1)
-      rails (~> 4.1.0)
+    mulberry_preview (0.0.3)
+      rails (~> 4.1, >= 4.1.0)
 
 GEM
   remote: https://ruby.taobao.org/

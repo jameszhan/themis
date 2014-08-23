@@ -5,15 +5,21 @@ class DigestWorker
 
   def perform(id)
     blob = Blob.find(id)
-    begin
-      if self.class.accept?(blob)
-        logger.info { "digest for \"#{blob.uri}\"" }
-        digest = digest(blob.uri)
-        blob.update(digest: digest)
+    if blob
+      if accept?(blob)
+        begin
+          logger.info { "digest for \"#{blob.uri}\"" }
+          digest = digest(blob.uri)
+          blob.update(digest: digest)
+        rescue Exception => e
+          logger.error "path => #{blob.uri} error: #{e.message}"
+          logger.error e.backtrace
+        end
+      else
+        logger.info "Not accept #{blob.uri}"
       end
-    rescue Exception => e
-      logger.error "path => #{blob.uri} error: #{e.message}"
-      logger.error e.backtrace
+    else
+      logger.info "can't find the blob for #{id}."
     end
   end
 
@@ -28,8 +34,9 @@ class DigestWorker
     sha.hexdigest
   end
 
-  def self.accept?(blob)
-    !blob.digest || File.stat(blob.uri).mtime != blob.modified_at
+  def accept?(blob)
+    stat = File.stat(blob.uri)
+    stat.file? && (!blob.digest || stat.mtime != blob.modified_at)
   end
 
 end

@@ -106,7 +106,7 @@ namespace :webfs do
 
   task :digest => :environment do
     Blob.where(digest: nil).each do|blob|
-      DigestWorker.perform_async(blob.id) if DigestWorker.accept?(blob)
+      DigestWorker.perform_async(blob.id)
     end
   end
 end

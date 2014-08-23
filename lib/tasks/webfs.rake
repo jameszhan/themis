@@ -42,7 +42,7 @@ def upsert_blob(path, basename, ext)
   end
 end
 
-IGNORE_EXTENSIONS = %w{.mbp .apnx .iml .ipr .iws .class .jar .lnk .url .bak .tmp .lpr .o .obj .demo}
+IGNORE_EXTENSIONS = %w{.mbp .apnx .iml .ipr .iws .class .jar .lnk .url .bak .tmp .lpr .o .obj .demo .gem .log .sqlite3 .sqlite3-journal .exe .out}
 OSX_APP_EXTENSION = %w{.pages .numbers .key .app}
 
 namespace :webfs do
@@ -52,7 +52,7 @@ namespace :webfs do
       Find.find(dir) do|path|
         ext = File.extname(path).downcase
         basename = File.basename(path, ext)
-        if basename[0] == ?. || IGNORE_EXTENSIONS.include?(ext)
+        if basename[0] == ?. || ext.empty? || IGNORE_EXTENSIONS.include?(ext)
           logger.info "prune directory or file #{path}."
           Find.prune
         elsif File.file?(path)

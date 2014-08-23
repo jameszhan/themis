@@ -1,1 +1,32 @@
-- /opt/personal
+dirs:
+  - /opt/personal
+  - /u/workdir
+ignore_extensions:
+  - .iml
+  - .ipr
+  - .iws
+  - .mbp
+  - .apnx
+  - .class
+  - .jar
+  - .lnk
+  - .url
+  - .bak
+  - .tmp
+  - .lpr
+  - .o
+  - .obj
+  - .demo
+  - .gem
+  - .log
+  - .sqlite3
+  - .sqlite3-journal
+  - .exe
+  - .out
+  - .dylib
+osx_formats:
+  - .app
+  - .pages
+  - .numbers
+  - .key
+  - .pvm

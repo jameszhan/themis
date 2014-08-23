@@ -42,29 +42,29 @@ def upsert_blob(path, basename, ext)
   end
 end
 
-IGNORE_EXTENSIONS = %w{.3gp .mbp .apnx .iml .ipr .iws .class .jar .lnk .url .bak .tmp .lpr .o .obj .demo .gem .log .sqlite3 .sqlite3-journal .exe .out}
-OSX_APP_EXTENSION = %w{.pages .numbers .key .app}
-
 namespace :webfs do
   task :load => :environment do
-    dirs = YAML.load_file(File.expand_path('config/webfs.yml', Rails.root))
-    dirs.each do|dir|
+    config = YAML.load_file(File.expand_path('config/webfs.yml', Rails.root))
+    config['dirs'].each do |dir|
       Find.find(dir) do|path|
         ext = File.extname(path).downcase
         basename = File.basename(path, ext)
-        if basename[0] == ?. || IGNORE_EXTENSIONS.include?(ext)
+        if basename[0] == ?.
           logger.info "prune directory or file #{path}."
           Find.prune
-        elsif !ext.empty? && File.file?(path)
-          upsert_blob(path, basename, ext)
         elsif File.directory?(path)
-          if OSX_APP_EXTENSION.include?(ext)
+          if config['osx_formats'].include?(ext)
             upsert_blob(path, basename, ext)
             logger.info "prune path #{path}."
             Find.prune
           else
             next
           end
+        elsif ext.empty? || config['ignore_extensions'].include?(ext)
+          logger.info "prune file #{path}."
+          Find.prune
+        elsif File.file?(path)
+          upsert_blob(path, basename, ext)
         else
           logger.info "unaccept path #{path}."
         end

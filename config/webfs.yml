@@ -24,12 +24,13 @@ ignore_extensions:
   - .exe
   - .out
   - .dylib
-ignore_directorys:
+ignore_directories:
   - tmp
   - temp
   - cache
   - logs
   - log
+  - node_modules
 osx_formats:
   - .app
   - .pages

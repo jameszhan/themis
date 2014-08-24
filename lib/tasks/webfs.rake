@@ -49,24 +49,23 @@ namespace :webfs do
       Find.find(dir) do|path|
         ext = File.extname(path).downcase
         basename = File.basename(path, ext)
-        if basename[0] == ?. || config['ignore_directorys'].include?(basename)
-          logger.info "prune directory or file #{path}."
-          Find.prune
-        elsif File.directory?(path)
+        if File.directory?(path)
           if config['osx_formats'].include?(ext)
             upsert_blob(path, basename, ext)
-            logger.info "prune path #{path}."
+            logger.info "prune osx file #{path}."
+            Find.prune
+          elsif basename[0] == ?. || config['ignore_directories'].include?(basename)
+            logger.info "ignore directory #{path}."
             Find.prune
           else
             next
           end
-        elsif ext.empty? || config['ignore_extensions'].include?(ext)
-          logger.info "prune file #{path}."
-          Find.prune
+        elsif basename[0] == ?. || ext.empty? || config['ignore_extensions'].include?(ext)
+          logger.debug "ignore file #{path}."
         elsif File.file?(path)
           upsert_blob(path, basename, ext)
         else
-          logger.info "unaccept path #{path}."
+          logger.warn "unaccept path #{path}."
         end
       end
     end

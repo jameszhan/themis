@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Themis</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+    <title>Themis</title>
+    <%= stylesheet_link_tag    'backend', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'backend', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 </head>
 <body>
 
@@ -17,12 +17,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" class="navbar-brand">Themis</a>
+            <%= link_to 'Themis', '#', class: 'navbar-brand' %>
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <li><a href="#">Temlates</a></li>
-                <li><a href="#">Messages</a></li>
+                <li><%= link_to 'Timesheets', timesheets_path %></li>
+                <li><%= link_to 'Todos', tasks_path %></li>
+                <li><%= link_to 'WebFS', blobs_path %></li>
             </ul>
         </nav>
     </div>

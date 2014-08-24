@@ -1,36 +1,38 @@
-<h1>Listing blobs</h1>
-
-<table>
+<%= paginate @blobs %>
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th>Digest</th>
-      <th>Uri</th>
-      <th>Size</th>
-      <th>Mime</th>
-      <th>Name</th>
-      <th>Modified at</th>
-      <th colspan="3"></th>
+      <th><%= sortable :id, 'ID' %></th>
+      <th><%= sortable :size, '大小' %></th>
+      <th><%= sortable :mime, '类型' %></th>
+      <th><%= sortable :name, '名称' %></th>
+      <th><%= sortable :created_at, '创建时间' %></th>
+      <th><%= sortable :modified_at, '修改时间' %></th>
+      <!--th colspan="3"></th-->
     </tr>
   </thead>
 
   <tbody>
     <% @blobs.each do |blob| %>
       <tr>
-        <td><%= blob.digest %></td>
-        <td><%= blob.uri %></td>
-        <td><%= blob.size %></td>
+        <td title="<%= blob.digest %>"><%= blob.id %></td>
+        <td><%= blob.size.to_s(:human_size) %></td>
         <td><%= blob.mime %></td>
-        <td><%= blob.name %></td>
-        <td><%= blob.modified_at %></td>
+        <td><a href="javascript:;" data-container="body" data-toggle="popover" data-placement="top" data-content="<%= blob.uri %>"><%= blob.name %></a></td>
+        <td><%= blob.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <td><%= blob.modified_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <!--
         <td><%= link_to 'Show', blob %></td>
         <td><%= link_to 'Edit', edit_blob_path(blob) %></td>
         <td><%= link_to 'Destroy', blob, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        -->
       </tr>
     <% end %>
   </tbody>
-  <%= paginate @blobs %>
 </table>
+<%= paginate @blobs %>
 
-<br>
+
+<br />
 
 <%= link_to 'New Blob', new_blob_path %>

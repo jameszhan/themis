@@ -1,10 +1,12 @@
 class BlobsController < ApplicationController
   before_action :set_blob, only: [:show, :edit, :update, :destroy]
 
+  layout 'backend'
+
   # GET /blobs
   # GET /blobs.json
   def index
-    @blobs = Blob.page params[:page]
+    @blobs = Blob.order("#{params[:order]} #{params[:direction]}").page params[:page]
   end
 
   # GET /blobs/1

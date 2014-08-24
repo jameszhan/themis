@@ -52,6 +52,7 @@ gem 'mulberry_preview',  path: '../mulberry_preview'
 
 gem 'simple_form'
 gem 'angularjs-rails'
+gem 'bootstrap-sass-rails'
 group :development do
   gem 'pry'
   gem 'better_errors'

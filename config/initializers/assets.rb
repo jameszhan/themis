@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w(tasks.js timesheets.js)
+Rails.application.config.assets.precompile += %w(tasks.js timesheets.js backend.js backend.css)

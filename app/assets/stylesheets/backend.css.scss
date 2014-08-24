@@ -1,0 +1,15 @@
+@import "twitter/bootstrap";
+
+body {
+  padding-top: 50px;
+}
+
+
+.asc {
+  @extend .glyphicon;
+  @extend .glyphicon-arrow-up;
+}
+.desc {
+  @extend .glyphicon;
+  @extend .glyphicon-arrow-down;
+}

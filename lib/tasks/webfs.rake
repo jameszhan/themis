@@ -12,7 +12,7 @@ end
 
 def upsert_blob(path, basename, ext)
   stat = File.stat(path)
-  blob = Blob.where(uri: path).first
+  blob = Blob.where(uri: path).take
   if blob
     if blob.modified_at != stat.mtime
       logger.info "update file #{path}"

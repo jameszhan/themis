@@ -27,7 +27,6 @@ ignore_extensions:
 ignore_directories:
   - tmp
   - temp
-  - cache
   - logs
   - log
   - node_modules

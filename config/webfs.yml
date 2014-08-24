@@ -24,6 +24,7 @@ ignore_extensions:
   - .exe
   - .out
   - .dylib
+  - .lock
 ignore_directories:
   - tmp
   - temp

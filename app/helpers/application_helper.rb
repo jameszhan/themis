@@ -6,7 +6,7 @@ module ApplicationHelper
 
   def sortable(column, title = nil)
     title ||= column.titleize
-    order, direction = params.fetch(:order, column), params.fetch(:direction, 'desc')
+    order, direction = params.fetch(:order, column), params[:direction]
     icon = "<i class=\"#{column == order.to_sym ? "current #{direction}" : 'visible-xs'}\"></i>"
     raw "#{link_to(title, {:order => column, :direction => (direction == 'desc' ? 'asc' : 'desc')})}#{icon}"
   end

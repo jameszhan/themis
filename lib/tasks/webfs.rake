@@ -49,7 +49,7 @@ namespace :webfs do
       Find.find(dir) do|path|
         ext = File.extname(path).downcase
         basename = File.basename(path, ext)
-        if basename[0] == ?.
+        if basename[0] == ?. || config['ignore_directorys'].include?(basename)
           logger.info "prune directory or file #{path}."
           Find.prune
         elsif File.directory?(path)

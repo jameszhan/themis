@@ -17,12 +17,13 @@ def upsert_blob(path, basename, ext)
     if blob.modified_at != stat.mtime
       logger.info "update file #{path}"
       blob.update(size: stat.size, modified_at: stat.mtime, digest: nil)
+      DigestWorker.perform_async(blob.id)
     else
       logger.debug "ignore file #{path}"
     end
   else
     logger.info "load file #{path}"
-    Blob.create(
+    blob = Blob.create(
         name: basename,
         mime: Mime.fetch(ext[/\w+/]){|fallback| "unknown/#{fallback}" }.to_s,
         uri: path,
@@ -31,6 +32,7 @@ def upsert_blob(path, basename, ext)
         created_at: stat.ctime,
         modified_at: stat.mtime
     )
+    DigestWorker.perform_async(blob.id)
   end
 end
 

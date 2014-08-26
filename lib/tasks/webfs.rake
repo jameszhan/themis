@@ -16,15 +16,7 @@ def upsert_blob(path, basename, ext)
   if blob
     if blob.modified_at != stat.mtime
       logger.info "update file #{path}"
-      blob.update(
-          name: basename,
-          mime: Mime.fetch(ext[/\w+/]){|fallback| "unknown/#{fallback}" }.to_s,
-          uri: path,
-          extension: ext,
-          size: stat.size,
-          created_at: stat.ctime,
-          modified_at: stat.mtime
-      )
+      blob.update(size: stat.size, modified_at: stat.mtime, digest: nil)
     else
       logger.debug "ignore file #{path}"
     end

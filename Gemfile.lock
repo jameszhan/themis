@@ -1,7 +1,7 @@
 PATH
   remote: ../mulberry_preview
   specs:
-    mulberry_preview (0.0.8)
+    mulberry_preview (0.0.10)
       bootstrap-sass-rails (~> 3)
       coderay (~> 1)
       rails (~> 4.1, >= 4.1.0)

@@ -1,8 +1,8 @@
 PATH
   remote: ../mulberry_preview
   specs:
-    mulberry_preview (0.0.7)
-      bootstrap-sass-rails
+    mulberry_preview (0.0.8)
+      bootstrap-sass-rails (~> 3)
       rails (~> 4.1, >= 4.1.0)
 
 GEM

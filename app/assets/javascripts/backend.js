@@ -4,5 +4,15 @@
 //= require bootstrap
 
 $(document).ready(function(){
-    $(document).find('[data-toggle=popover]').popover('hide');
+    $(document)
+        .on('click', 'a[data-preview]', function(e){
+            var self = $(this),
+                target = $(self.data('target'));
+            target.find(".modal-title").text(self.data('title'));
+            if (self.data('preview')) {
+                target.find('.modal-body > iframe').attr('src', self.data('preview'));
+            }
+            e.preventDefault();
+        })
+        .find('[data-toggle=popover]').popover('hide');
 });

@@ -15,10 +15,12 @@
   <tbody>
     <% @blobs.each do |blob| %>
       <tr>
-        <td title="<%= blob.digest %>"><%= blob.id %></td>
+        <td><%= link_to blob.id, '#', data:{container: 'body', toggle: 'popover', placement: 'top', content: blob.uri} %></td>
         <td><%= blob.size.to_s(:human_size) %></td>
         <td><%= blob.mime %></td>
-        <td><a href="javascript:;" data-container="body" data-toggle="popover" data-placement="top" data-content="<%= blob.uri %>"><%= blob.name %></a></td>
+        <td>
+            <%= content_tag :a, blob.name, data: {toggle: 'modal', target:'#previewModal', mime: blob.mime, title: blob.name, preview: preview_path(:blobs, blob.id)} %>
+        </td>
         <td><%= blob.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
         <td><%= blob.modified_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
         <!--

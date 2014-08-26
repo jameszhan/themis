@@ -39,20 +39,18 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'redcarpet'
-gem 'coderay'
-
-
 gem 'kaminari'
 
 gem 'sidekiq'
 gem 'sinatra', require: nil
 
+gem 'redcarpet'
+gem 'coderay'
 gem 'mulberry_preview',  path: '../mulberry_preview'
+gem 'bootstrap-sass-rails'
 
 gem 'simple_form'
 gem 'angularjs-rails'
-gem 'bootstrap-sass-rails'
 group :development do
   gem 'pry'
   gem 'better_errors'

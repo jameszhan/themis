@@ -3,7 +3,9 @@ PATH
   specs:
     mulberry_preview (0.0.8)
       bootstrap-sass-rails (~> 3)
+      coderay (~> 1)
       rails (~> 4.1, >= 4.1.0)
+      redcarpet (~> 3, >= 3)
 
 GEM
   remote: https://ruby.taobao.org/

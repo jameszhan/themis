@@ -12,6 +12,9 @@ $(document).ready(function(){
             if (self.data('preview')) {
                 target.find('.modal-body > iframe').attr('src', self.data('preview'));
             }
+            target.on('click', '.open-file', function(e){
+                $.post('open', {path: self.data('uri'), mime: self.data('mime')});
+            });
             e.preventDefault();
         })
         .find('[data-toggle=popover]').popover('hide');

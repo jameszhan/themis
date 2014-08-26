@@ -19,7 +19,7 @@
         <td><%= blob.size.to_s(:human_size) %></td>
         <td><%= blob.mime %></td>
         <td>
-            <%= content_tag :a, blob.name, data: {toggle: 'modal', target:'#previewModal', mime: blob.mime, title: blob.name, preview: preview_path(:blobs, blob.id)} %>
+            <%= content_tag :a, blob.name, data: {toggle: 'modal', target:'#previewModal', uri: blob.uri, mime: blob.mime, title: blob.name, preview: preview_path(:blobs, blob.id)} %>
         </td>
         <td><%= blob.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
         <td><%= blob.modified_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
